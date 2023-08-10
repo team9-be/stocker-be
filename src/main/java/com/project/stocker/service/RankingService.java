@@ -1,16 +1,7 @@
-package com.project.stocker.ranking.service;
+package com.project.stocker.service;
 
-import com.project.stocker.ranking.*;
-import com.project.stocker.ranking.dto.RankingDecreaseDto;
-import com.project.stocker.ranking.dto.RankingIncreaseDto;
-import com.project.stocker.ranking.dto.RankingVolumeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

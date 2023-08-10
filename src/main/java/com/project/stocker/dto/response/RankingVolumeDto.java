@@ -1,4 +1,4 @@
-package com.project.stocker.ranking.dto;
+package com.project.stocker.dto.response;
 
 import lombok.Getter;
 
