@@ -8,7 +8,7 @@ public class RankingDecreaseDto {
     private Double decreaseAmount;
 
     public RankingDecreaseDto(String company, Double decreaseAmount) {
-        this.company=company;
-        this.decreaseAmount=decreaseAmount;
+        this.company = company;
+        this.decreaseAmount = decreaseAmount;
     }
 }

@@ -8,7 +8,7 @@ public class RankingIncreaseDto {
     private Double increaseAmount;
 
     public RankingIncreaseDto(String company, Double increaseAmount) {
-        this.company=company;
-        this.increaseAmount=increaseAmount;
+        this.company = company;
+        this.increaseAmount = increaseAmount;
     }
 }

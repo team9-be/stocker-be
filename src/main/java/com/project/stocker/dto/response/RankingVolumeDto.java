@@ -8,8 +8,8 @@ public class RankingVolumeDto {
     private Long tradeVolume;
 
     public RankingVolumeDto(String company, Long tradeVolume) {
-        this.company=company;
-        this.tradeVolume=tradeVolume;
+        this.company = company;
+        this.tradeVolume = tradeVolume;
     }
 
 }
