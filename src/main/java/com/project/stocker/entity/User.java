@@ -1,5 +1,6 @@
 package com.project.stocker.entity;
 
+import com.project.stocker.util.Auditing;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class User {
+public class User extends Auditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +26,8 @@ public class User {
     private String email;
 
     private boolean status;
+
+
 
     public User(String username, String password, String email, UserRoleEnum role) {
         this.username = username;
