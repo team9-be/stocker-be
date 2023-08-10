@@ -1,6 +1,5 @@
 package com.project.stocker.util;
 
-import com.project.stocker.dto.request.Trade;
 import com.project.stocker.entity.Stock;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Connection;
@@ -47,7 +46,6 @@ public class JsoupCrawling {
     }
 
     public void getTrades(List<Stock> stocks) {
-        List<Trade> trades = new ArrayList<>();
         for (Stock stock : stocks) {
             for (int i = 1; i < 41; i++) {
                 Connection conn = Jsoup.connect(TRADE_URL_BASE + "code=" + stock.getCode() + "&thistime=20230809162200&page=" + i);
