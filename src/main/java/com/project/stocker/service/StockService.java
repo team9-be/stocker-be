@@ -16,8 +16,13 @@ public class StockService {
     private final JsoupCrawling jsoupCrawling;
 
     public void saveStockList() {
-        List<Stock> stocks = jsoupCrawling.getStocks().stream().map(Stock::new).toList();
+        List<Stock> stocks = jsoupCrawling.getStocks();
         stockRepository.saveAll(stocks);
+    }
+
+    public void saveTradeList() {
+        List<Stock> stocks = stockRepository.findAll();
+        jsoupCrawling.getTrades(stocks);
     }
 
 }

@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -22,9 +25,9 @@ public class Stock {
     @Column(nullable = false)
     private String status;
 
-    public Stock(StockDto stockDto) {
-        this.company = stockDto.getCompany();
-        this.code = stockDto.getCode();
+    public Stock(String company, String code) {
+        this.company = company;
+        this.code = code;
         this.status = "ok";
     }
 }

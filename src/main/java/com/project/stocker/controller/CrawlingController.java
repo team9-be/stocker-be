@@ -15,4 +15,9 @@ public class CrawlingController {
     public void getStock() {
         stockService.saveStockList();
     }
+
+    @GetMapping("/api/stock/crawling/save")
+    public void getStockTrade() {
+        stockService.saveTradeList();
+    }
 }
