@@ -1,7 +1,16 @@
 package com.project.stocker.ranking.service;
 
+import com.project.stocker.ranking.*;
+import com.project.stocker.ranking.dto.RankingDecreaseDto;
+import com.project.stocker.ranking.dto.RankingIncreaseDto;
+import com.project.stocker.ranking.dto.RankingVolumeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -11,17 +20,17 @@ public class RankingService {
 //    private final SellRepository sellRepository;
 //    private final StockRepository stockRepository;
 //
-////    public Long getTradeVolumeForStock(Stock stock) {
-////        Long buyVolumeForStock = buyRepository.findAllByCompany(stock.getCompany()).stream()
-////                .mapToLong(Buy::getQuantity)
-////                .sum();
-////
-////        Long sellVolumeForStock = sellRepository.findAllByCompany(stock.getCompany()).stream()
-////                .mapToLong(Sell::getQuantity)
-////                .sum();
-////
-////        return buyVolumeForStock + sellVolumeForStock;
-////    }
+//    public Long getTradeVolumeForStock(Stock stock) {
+//        Long buyVolumeForStock = buyRepository.findAllByCompany(stock.getCompany()).stream()
+//                .mapToLong(Buy::getQuantity)
+//                .sum();
+//
+//        Long sellVolumeForStock = sellRepository.findAllByCompany(stock.getCompany()).stream()
+//                .mapToLong(Sell::getQuantity)
+//                .sum();
+//
+//        return buyVolumeForStock + sellVolumeForStock;
+//    }
 //
 //    public Double getIncreaseAmount() {
 //        List<Buy> buys = buyRepository.findAll();
@@ -76,6 +85,6 @@ public class RankingService {
 //                .limit(10)
 //                .collect(Collectors.toList());
 //    }
-//
-//
+
+
 }
