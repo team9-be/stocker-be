@@ -1,5 +1,6 @@
 package com.project.stocker.entity;
 
+
 import com.project.stocker.util.Auditing;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,8 +27,6 @@ public class User extends Auditing {
     private String email;
 
     private boolean status;
-
-
 
     public User(String username, String password, String email, UserRoleEnum role) {
         this.username = username;
