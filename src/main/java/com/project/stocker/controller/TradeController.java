@@ -1,6 +1,7 @@
 package com.project.stocker.controller;
 
 import com.project.stocker.dto.request.*;
+import com.project.stocker.service.BuyService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,8 +14,8 @@ public class TradeController {
         return "buy";
     }
     @PostMapping("/buy")
-    public String buyCreate(@RequestBody BuyCreateDto buyCreateDto){
-        return "buy";
+    public com.project.stocker.dto.response.BuyCreateDto buyCreate(@RequestBody BuyCreateDto buyCreateDto){
+        return BuyService.buyCreate(buyCreateDto);
     }
 
     @PutMapping("/buy")
