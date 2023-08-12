@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BuyService {
 //    private final StockService stockService;
 //    private final UserService userService;
-    private final BuyService buyService;
+//    private final BuyService buyService;
 
     public static BuyCreateDto buyCreate(com.project.stocker.dto.request.BuyCreateDto buyCreateDto){
 

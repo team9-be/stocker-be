@@ -1,5 +1,6 @@
 package com.project.stocker.util;
 
+import com.project.stocker.dto.request.TradeDto;
 import com.project.stocker.entity.Stock;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Connection;
@@ -45,28 +46,35 @@ public class JsoupCrawling {
         return stocks;
     }
 
-    public void getTrades(List<Stock> stocks) {
+    public List<TradeDto> getTrades(List<Stock> stocks) {
+        List<TradeDto> trades = new ArrayList<>();
         for (Stock stock : stocks) {
-            for (int i = 1; i < 41; i++) {
-                Connection conn = Jsoup.connect(TRADE_URL_BASE + "code=" + stock.getCode() + "&thistime=20230809162200&page=" + i);
+            if(stock.getId() < 100){
+                for (int i = 1; i < 41; i++) {
+                    Connection conn = Jsoup.connect(TRADE_URL_BASE + "code=" + stock.getCode() + "&thistime=20230809162200&page=" + i);
 
-                try {
-                    Document document = conn.get();
-                    Elements elements = document.select("table.type2 tbody tr");
+                    try {
+                        Document document = conn.get();
+                        Elements elements = document.select("table.type2 tbody tr");
 
-                    for (Element element : elements) {
-                        if (element.attr("onmouseover").isEmpty()) {
-                            continue;
+                        for (Element element : elements) {
+                            if (element.attr("onmouseover").isEmpty()) {
+                                continue;
+                            }
+                            String price = element.select("td").get(1).text().replaceAll(",", "");
+                            String quantity = element.select("td").get(6).text().replaceAll(",", "");
+
+                            if (!price.equals("") && !quantity.equals("")) {
+                                trades.add(new TradeDto(Long.parseLong(quantity), Long.parseLong(price), stock));
+                            }
                         }
-                        String price = element.select("td").get(1).text();
-                        String quantity = element.select("td").get(6).text();
-
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 }
             }
         }
+        return trades;
     }
 
 }
