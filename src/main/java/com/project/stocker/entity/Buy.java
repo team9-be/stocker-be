@@ -30,13 +30,24 @@ public class Buy extends Auditing {
     @Column
     private String status;
 
-    @ManyToOne
+
+    @CreatedDate
+    @Column(updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stock_id")
     private Stock stock;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
 
     public Buy(Long quantity, Long price, Stock stock, User user) {
         this.quantity = quantity;
@@ -45,4 +56,5 @@ public class Buy extends Auditing {
         this.stock = stock;
         this.user = user;
     }
+
 }
