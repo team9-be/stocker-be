@@ -30,11 +30,11 @@ public class Buy extends Auditing {
     @Column
     private String status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stock_id")
     private Stock stock;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -45,4 +45,5 @@ public class Buy extends Auditing {
         this.stock = stock;
         this.user = user;
     }
+
 }
