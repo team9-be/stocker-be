@@ -33,5 +33,10 @@ public class User extends Auditing {
         this.password = password;
         this.email = email;
         this.role = role;
+        this.status = true;
+    }
+
+    public void disabled() {
+        this.status = false;
     }
 }

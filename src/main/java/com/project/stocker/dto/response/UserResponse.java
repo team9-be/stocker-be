@@ -1,12 +1,11 @@
 package com.project.stocker.dto.response;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-public class LoginResponse {
+public class UserResponse {
     private String msg;
-    public LoginResponse(String msg) {
+    public UserResponse(String msg) {
         this.msg = msg;
     }
 }

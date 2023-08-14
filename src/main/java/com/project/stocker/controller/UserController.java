@@ -3,6 +3,7 @@ package com.project.stocker.controller;
 
 import com.project.stocker.dto.request.LoginRequestDto;
 import com.project.stocker.dto.request.SignupRequestDto;
+import com.project.stocker.dto.response.UserResponse;
 import com.project.stocker.entity.User;
 import com.project.stocker.filter.UserDetailsImpl;
 import com.project.stocker.service.UserService;
@@ -24,9 +25,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public void login(@RequestBody LoginRequestDto requestDto, HttpServletResponse res) {
+    public UserResponse login(@RequestBody LoginRequestDto requestDto, HttpServletResponse res) {
         String token = userService.login(requestDto);
+        if(token.equals("해당 아이디가 비활성화 상태입니다.")){
+            return new UserResponse("해당 아이디가 비활성화 상태입니다.");
+        }
         res.addHeader("Authorization", token);
+        return new UserResponse("로그인 되었습니다");
     }
 
     @PostMapping("/logout")
@@ -34,5 +39,11 @@ public class UserController {
         User user = userDetails.getUser();
         String logoutToken = userService.logout(user, request);
         res.addHeader("Authorization", logoutToken);
+    }
+    @PostMapping("/disabled")
+    public UserResponse disabled(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        User user = userDetails.getUser();
+        userService.disabled(user);
+        return new UserResponse("비활성화 되었습니다");
     }
 }
