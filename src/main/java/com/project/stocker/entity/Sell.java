@@ -1,5 +1,6 @@
 package com.project.stocker.entity;
 
+import com.project.stocker.util.Auditing;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @Table
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sell {
+public class Sell extends Auditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -29,20 +30,19 @@ public class Sell {
     @Column
     private String status;
 
-    @CreatedDate
-    @Column(updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdAt;
+    @ManyToOne
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
 
-    @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime updatedAt;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-//    @ManyToOne
-//    @JoinColumn(name = "stock_id")
-//    private Stock stock;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    public Sell(Long quantity, Long price, Stock stock, User user) {
+        this.quantity = quantity;
+        this.price = price;
+        this.status = "done";
+        this.stock = stock;
+        this.user = user;
+    }
 }
