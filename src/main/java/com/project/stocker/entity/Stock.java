@@ -25,6 +25,12 @@ public class Stock {
     @Column(nullable = false)
     private String status;
 
+    @OneToMany(mappedBy = "stock")
+    private List<Buy> buys = new ArrayList<>();
+
+    @OneToMany(mappedBy = "stock")
+    private List<Sell> sells = new ArrayList<>();
+
     public Stock(String company, String code) {
         this.company = company;
         this.code = code;

@@ -5,6 +5,10 @@ import com.project.stocker.util.Auditing;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +31,12 @@ public class User extends Auditing {
     private String email;
 
     private boolean status;
+
+    @OneToMany(mappedBy = "user")
+    private List<Buy> buys = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Sell> sells = new ArrayList<>();
 
     public User(String username, String password, String email, UserRoleEnum role) {
         this.username = username;
