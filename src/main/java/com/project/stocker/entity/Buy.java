@@ -38,11 +38,11 @@ public class Buy {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt;
 
-//    @ManyToOne
-//    @JoinColumn(name = "stock_id")
-//    private Stock stock;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

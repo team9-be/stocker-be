@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SellService {
 //    private final StockService stockService;
 //    private final UserService userService;
-    private final SellService sellService;
+//    private final SellService sellService;
 
 
     public SellCreateDto sellCreate(com.project.stocker.dto.request.SellCreateDto sellCreateDto) {
