@@ -58,6 +58,9 @@ public class UserService {
     public String login(LoginRequestDto requestDto) {
         User user = userRepository.findByEmail(requestDto.getEmail()).orElseThrow(() ->
                 new IllegalArgumentException("등록되지 않은 이메일입니다"));
+        if(!user.isStatus()){
+            return "해당 아이디가 비활성화 상태입니다.";
+        }
         if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("잘못된 비밀번호 입니다.");
         }
@@ -72,5 +75,12 @@ public class UserService {
         }
         String logoutToken = jwtUtil.logout(user.getEmail(), user.getRole());
         return logoutToken;
+    }
+
+    public void disabled(User user) {
+        if(!user.isStatus()){
+            throw new IllegalArgumentException("이미 비활성화된 상태입니다");
+        }
+        user.disabled();
     }
 }
