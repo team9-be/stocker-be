@@ -1,12 +1,18 @@
 package com.project.stocker.jwt;
 
 import com.project.stocker.entity.UserRoleEnum;
+import com.project.stocker.filter.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -16,6 +22,7 @@ import java.util.Date;
 
 @Slf4j(topic = "JwtUtil")
 @Component
+@RequiredArgsConstructor
 public class JwtUtil {
     // Header KEY 값
     public static final String AUTHORIZATION_HEADER = "Authorization";
@@ -24,18 +31,44 @@ public class JwtUtil {
     // Token 식별자
     public static final String BEARER_PREFIX = "Bearer ";
     // 토큰 만료시간
-    private final long TOKEN_TIME = 60 * 60 * 1000L; // 60분
-    private final long LOGOUT_TIME = 60 * 60 * 1000L; // 60분
+    private final RedisTemplate<String, String> redisTemplate;
+    long sec = 1000L;       //테스트용
+    long minute = 60 * 1000L;
+    long hour = 60 * minute;
+
+
+    private final long TOKEN_TIME = 3*sec; // 60분
+
+    private final long REFRESHTOKEN_TIME = minute;
+
+    private final long LOGOUT_TIME = 0; // 60분
 
     @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
     private String secretKey;
     private Key key;
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+    private UserDetailsServiceImpl userDetailsService;
 
     @PostConstruct
     public void init() {
         byte[] bytes = Base64.getDecoder().decode(secretKey);
         key = Keys.hmacShaKeyFor(bytes);
+    }
+
+    public String createRefreshToken(String userEmail) {
+        Date date = new Date();
+        String refreshToken = Jwts.builder()
+                .setSubject(userEmail)
+                .setExpiration(new Date(date.getTime() + REFRESHTOKEN_TIME))
+                .setIssuedAt(date)
+                .signWith(key, signatureAlgorithm)
+                .compact();
+
+        return refreshToken;
+    }
+
+    public boolean validateRefreshToken(String refreshToken) {
+        return redisTemplate.hasKey(refreshToken);
     }
 
     // 토큰 생성
@@ -50,6 +83,16 @@ public class JwtUtil {
                         .setIssuedAt(date) // 발급일
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
                         .compact();
+    }
+
+    public Authentication getAuthentication(String token) {
+        String userPrincipal = Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody().getSubject();
+        UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
+
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     public String logout(String email, UserRoleEnum role) {
@@ -95,5 +138,9 @@ public class JwtUtil {
     // 토큰에서 사용자 정보 가져오기
     public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+    }
+
+    public long getRefreshTokenTime() {
+        return REFRESHTOKEN_TIME;
     }
 }

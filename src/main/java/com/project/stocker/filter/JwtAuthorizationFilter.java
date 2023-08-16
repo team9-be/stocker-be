@@ -1,5 +1,6 @@
 package com.project.stocker.filter;
 
+import com.project.stocker.entity.UserRoleEnum;
 import com.project.stocker.jwt.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -7,6 +8,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.sql.exec.internal.BaseExecutionContext;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -32,19 +35,28 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
 
         String tokenValue = jwtUtil.getJwtFromHeader(req);
+
         if (StringUtils.hasText(tokenValue)) {
             if (!jwtUtil.validateToken(tokenValue)) {
-                log.error("Token Error");
-                return;
-            }
-            Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
-            try {
+                // 액세스 토큰이 유효하지 않은 경우
+                String refreshToken = req.getHeader("Refresh-Token");
+                if (StringUtils.hasText(refreshToken) && jwtUtil.validateRefreshToken(refreshToken)) {
+                    // 리프레시 토큰이 유효한 경우, 새로운 액세스 토큰 발급
+                    String username = jwtUtil.getUserInfoFromToken(refreshToken).getSubject();
+                    String newAccessToken = jwtUtil.createToken(username, UserRoleEnum.USER);
+                    res.setHeader("Access-Token", newAccessToken);
+                } else {
+                    // 리프레시 토큰이 유효하지 않은 경우, 에러 로깅
+                    log.error("Invalid Refresh Token");
+                    return;
+                }
+            } else {
+                // 액세스 토큰이 유효한 경우
+                Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
                 setAuthentication(info.getSubject());
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                return;
             }
         }
+
         filterChain.doFilter(req, res);
     }
 
