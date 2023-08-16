@@ -9,10 +9,12 @@ import com.project.stocker.jwt.JwtUtil;
 import com.project.stocker.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +23,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final RedisTemplate<String, String> redisTemplate;
+
+    long minute = 60 * 1000L;
+    long hour = 60 * minute;
+    private final long REFRESHTOKEN_TIME = hour;
+
+
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
@@ -65,8 +74,14 @@ public class UserService {
             throw new IllegalArgumentException("잘못된 비밀번호 입니다.");
         }
         String token = jwtUtil.createToken(user.getEmail(), user.getRole());
+        String refreshToken = jwtUtil.createRefreshToken(user.getEmail());
+        redisTemplate.opsForValue().set(refreshToken, user.getEmail());
+        redisTemplate.expire(refreshToken, jwtUtil.getRefreshTokenTime(), TimeUnit.MILLISECONDS);
+
         return token;
     }
+
+
 
     public String logout(User user, HttpServletRequest req) {
         String token = jwtUtil.getJwtFromHeader(req);
