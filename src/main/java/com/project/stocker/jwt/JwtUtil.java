@@ -37,9 +37,9 @@ public class JwtUtil {
     long hour = 60 * minute;
 
 
-    private final long TOKEN_TIME = 3*sec; // 60분
+    private final long TOKEN_TIME = 10*minute; // 10분
 
-    private final long REFRESHTOKEN_TIME = minute;
+    private final long REFRESHTOKEN_TIME = hour;
 
     private final long LOGOUT_TIME = 0; // 60분
 
