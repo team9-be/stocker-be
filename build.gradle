@@ -50,7 +50,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     
     // logback
-    implementation group: 'ca.pjer', name: 'logback-awslogs-appender', version: '1.6.0'
+    implementation 'ca.pjer:logback-awslogs-appender:1.6.0'
 }
 //
 //tasks.named('test') {
