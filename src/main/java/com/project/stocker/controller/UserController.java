@@ -5,11 +5,16 @@ import com.project.stocker.dto.request.LoginRequestDto;
 import com.project.stocker.dto.request.SignupRequestDto;
 import com.project.stocker.dto.response.UserResponse;
 import com.project.stocker.entity.User;
+import com.project.stocker.entity.UserRoleEnum;
 import com.project.stocker.filter.UserDetailsImpl;
+import com.project.stocker.jwt.JwtUtil;
 import com.project.stocker.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
+    private final RedisTemplate<String, String> redisTemplate;
+    private final JwtUtil jwtUtil;
 
     @PostMapping("/signup")
     public void signup(@RequestBody SignupRequestDto requestDto) {
@@ -31,7 +38,17 @@ public class UserController {
             return new UserResponse("해당 아이디가 비활성화 상태입니다.");
         }
         res.addHeader("Authorization", token);
+
+
         return new UserResponse("로그인 되었습니다");
+    }
+
+    @PostMapping("/token/refresh")
+    public UserResponse refreshAccessToken(@RequestBody String refreshToken, HttpServletResponse res) {
+        String userEmail = redisTemplate.opsForValue().get(refreshToken);
+        String newAccessToken = jwtUtil.createToken(userEmail, UserRoleEnum.USER);
+        res.addHeader("Authorization", newAccessToken);
+        return new UserResponse("재발급 되었습니다");
     }
 
     @PostMapping("/logout")

@@ -11,6 +11,11 @@ java {
     sourceCompatibility = '17'
 }
 
+
+jar {
+	enabled = false
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -35,9 +40,19 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0'
     implementation 'org.jsoup:jsoup:1.15.3'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-core'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    
+    // logback
     implementation group: 'ca.pjer', name: 'logback-awslogs-appender', version: '1.6.0'
 }
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
+//
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}
