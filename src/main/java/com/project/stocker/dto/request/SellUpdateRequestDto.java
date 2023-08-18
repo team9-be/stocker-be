@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BuyUpdateDto {
+public class SellUpdateRequestDto {
     private Long trade_id;
     private Long quantity;
-    private Long buy_price;
+    private Long sell_price;
 }
