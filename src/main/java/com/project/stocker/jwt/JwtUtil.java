@@ -36,9 +36,9 @@ public class JwtUtil {
     long minute = 60 * 1000L;
     long hour = 60 * minute;
 
+    private final long REFRESHTOKEN_TIME = 10* minute;
 
-
-    private final long TOKEN_TIME = 10*minute; // 10분
+    private final long TOKEN_TIME = sec; // 10분
     
 
     private final long LOGOUT_TIME = 0; // 60분
@@ -57,7 +57,8 @@ public class JwtUtil {
 
     public String createRefreshToken(String userEmail) {
         Date date = new Date();
-        String refreshToken = Jwts.builder()
+        String refreshToken = BEARER_PREFIX+
+                Jwts.builder()
                 .setSubject(userEmail)
                 .setExpiration(new Date(date.getTime() + REFRESHTOKEN_TIME))
                 .setIssuedAt(date)
@@ -67,8 +68,20 @@ public class JwtUtil {
         return refreshToken;
     }
 
-    public boolean validateRefreshToken(String refreshToken) {
-        return redisTemplate.hasKey(refreshToken);
+    public boolean validateRefreshToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (SecurityException | MalformedJwtException | SignatureException e) {
+            log.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
+        } catch (ExpiredJwtException e) {
+            log.error("Expired JWT token, 만료된 JWT token 입니다.");
+        } catch (UnsupportedJwtException e) {
+            log.error("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.");
+        } catch (IllegalArgumentException e) {
+            log.error("JWT claims is empty, 잘못된 JWT 토큰 입니다.");
+        }
+        return false;
     }
 
     // 토큰 생성
@@ -118,6 +131,14 @@ public class JwtUtil {
         return null;
     }
 
+    public String getRefreshTokenFromHeader(HttpServletRequest request) {
+        String bearerRefreshToken = request.getHeader("RefreshToken");
+        if (StringUtils.hasText(bearerRefreshToken) && bearerRefreshToken.startsWith(BEARER_PREFIX)) {
+            return bearerRefreshToken.substring(7);
+        }
+        return null;
+    }
+
     // 토큰 검증
     public boolean validateToken(String token) {
         try {
@@ -140,7 +161,27 @@ public class JwtUtil {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
+    public String getJwtFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+
     public long getRefreshTokenTime() {
         return REFRESHTOKEN_TIME;
     }
+
+    public String getUserEmailFromToken(String token) {
+        Claims claims = getUserInfoFromToken(token);
+        return claims.get("sub", String.class);
+    }
 }
+
+
+
+
+
+
+
