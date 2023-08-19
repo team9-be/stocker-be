@@ -99,7 +99,6 @@ public class RankingService {
             sumInDeRecords.add(new SumInDeRecord(sell.getCreatedAt(), sell.getPrice()));
         }
 
-
         sumInDeRecords.sort(Comparator.comparing(SumInDeRecord::getCreatedAt).reversed());
 
         Double latestPrice = Double.valueOf(sumInDeRecords.get(0).getPrice());
@@ -127,7 +126,6 @@ public class RankingService {
         for (Stock stock : stockRepository.findAll()) {
             result.add(new RankingIncreaseDto(stock.getCompany(), getIncreasePercentage(stock)));
         }
-
         return result.stream()
                 .sorted(Comparator.comparing(RankingIncreaseDto::getIncreasePercentage).reversed())
                 .limit(10)
@@ -136,7 +134,7 @@ public class RankingService {
 
     //하락율 top 10
     @Cacheable(value = "top10ByTradeDecrease")
-    public List<RankingDecreaseDto> getTop10ByDecreasePercetage() {
+    public List<RankingDecreaseDto> getTop10ByDecreasePercentage() {
         List<RankingDecreaseDto> result = new ArrayList<>();
         for (Stock stock : stockRepository.findAll()) {
             result.add(new RankingDecreaseDto(stock.getCompany(), getDecreasePercentage(stock)));
