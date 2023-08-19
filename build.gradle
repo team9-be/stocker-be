@@ -48,7 +48,9 @@ dependencies {
     //redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
-
+    
+    // logback
+    implementation 'ca.pjer:logback-awslogs-appender:1.6.0'
 }
 //
 //tasks.named('test') {
