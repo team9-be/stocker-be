@@ -80,7 +80,7 @@ public class UserService {
         String refreshToken = jwtUtil.createRefreshToken(user.getEmail());
         redisTemplate.opsForValue().set(refreshToken, user.getEmail());
         redisTemplate.opsForValue().set(user.getEmail(), refreshToken, 24, TimeUnit.HOURS);
-        res.addHeader("RefreshToken", refreshToken);
+        res.addHeader("RefreshToken", refreshToken);        //컨트롤러 단에서 해야함.
         return token;
     }
 
