@@ -33,7 +33,7 @@ public class RankingController {
 
     @GetMapping("/stocks/decrease")
     public ResponseEntity<List<RankingDecreaseDto>> getTop10ByDecreaseAmount() {
-        List<RankingDecreaseDto> result = rankingService.getTop10ByDecreasePercetage();
+        List<RankingDecreaseDto> result = rankingService.getTop10ByDecreasePercentage();
         return ResponseEntity.ok(result);
     }
 
