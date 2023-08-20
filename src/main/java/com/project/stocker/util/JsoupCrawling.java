@@ -48,7 +48,8 @@ public class JsoupCrawling {
         List<TradeDto> trades = new ArrayList<>();
         for (Stock stock : stocks) {
             for (int i = 1; i < 41; i++) {
-                Connection conn = Jsoup.connect(TRADE_URL_BASE + "code=" + stock.getCode() + "&thistime=20230809162200&page=" + i);
+                Connection conn = Jsoup.connect(TRADE_URL_BASE + "code=" + stock.getCode() + "&thistime=20230818162200&page=" + i);
+                int index = 0;
 
                 try {
                     Document document = conn.get();
@@ -63,11 +64,14 @@ public class JsoupCrawling {
 
                         if (!price.equals("") && !quantity.equals("")) {
                             trades.add(new TradeDto(Long.parseLong(quantity), Long.parseLong(price), stock));
+                            index++;
                         }
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                if(index < 10)
+                    break;
             }
         }
         return trades;
