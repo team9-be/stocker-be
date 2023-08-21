@@ -14,12 +14,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 @Slf4j
@@ -30,9 +32,15 @@ public class RankingService {
     private final SellRepository sellRepository;
     private final StockRepository stockRepository;
 
+    LocalDate yesterday = LocalDate.now().minusDays(1);
+    LocalDate today = LocalDate.now();
+
     // 거래량 산출
     @Cacheable(value = "tradeVolume", key = "#stock.company")
     public Long getTradeVolumeForStock(Stock stock) {
+
+//        Stock cachedStock = getCacheForStock(stock);
+
         Long buyVolumeForStock = buyRepository.findByStock_Company(stock.getCompany())
                 .orElse(Collections.emptyList()) // 데이터가 없으면 빈 리스트 반환
                 .stream()
@@ -51,66 +59,106 @@ public class RankingService {
     // 상승율 산출
     @Cacheable(value = "tradeIncrease", key = "#stock.company")
     public Double getIncreasePercentage(Stock stock) {
+//        Stock cachedStock = getCacheForStock(stock);
 
-        List<Buy> buys = buyRepository.findTop2ByStockOrderByCreatedAtDesc(stock);
-        List<Sell> sells = sellRepository.findTop2ByStockOrderByCreatedAtDesc(stock);
+        Buy lastBuyOfYesterday = buyRepository
+                .findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, yesterday.plusDays(1)
+                        .atStartOfDay());
+        Buy lastBuyOfToday = buyRepository
+                .findFirstByStockAndCreatedAtBeforeOrderByCreatedAtDesc(stock, today.plusDays(1)
+                        .atStartOfDay());
 
-        if (sells.size() < 2) return 0.0;
-        if (buys.size() < 2) return 0.0;
+        Sell lastSellOfYesterday = sellRepository
+                .findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, yesterday.plusDays(1)
+                        .atStartOfDay());
+        Sell lastSellOfToday = sellRepository
+                .findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, yesterday.plusDays(1)
+                        .atStartOfDay());
 
         List<SumInDeRecord> sumInDeRecords = new ArrayList<>();
 
-        for (Buy buy : buys) {
-            sumInDeRecords.add(new SumInDeRecord(buy.getCreatedAt(), buy.getPrice()));
+        if (lastBuyOfYesterday != null) {
+            sumInDeRecords.add(new SumInDeRecord(lastBuyOfYesterday.getCreatedAt(), lastBuyOfYesterday.getPrice()));
         }
-        for (Sell sell : sells) {
-            sumInDeRecords.add(new SumInDeRecord(sell.getCreatedAt(), sell.getPrice()));
+        if (lastBuyOfToday != null) {
+            sumInDeRecords.add(new SumInDeRecord(lastBuyOfToday.getCreatedAt(), lastBuyOfToday.getPrice()));
+        }
+        if (lastSellOfYesterday != null) {
+            sumInDeRecords.add(new SumInDeRecord(lastSellOfYesterday.getCreatedAt(), lastSellOfYesterday.getPrice()));
+        }
+        if (lastSellOfToday != null) {
+            sumInDeRecords.add(new SumInDeRecord(lastSellOfToday.getCreatedAt(), lastSellOfToday.getPrice()));
         }
 
-        sumInDeRecords.sort(Comparator.comparing(SumInDeRecord::getCreatedAt).reversed());
+        sumInDeRecords.sort(Comparator.comparing(SumInDeRecord::getCreatedAt));
 
+        // 가장 빠른 거래와 가장 늦은 거래 선택
+        if (sumInDeRecords.size() < 2) {
+            return 0.0;
+        }
+        double firstPriceOfYesterday = sumInDeRecords.get(0).getPrice();
+        double lastPriceOfYesterday = sumInDeRecords.get(sumInDeRecords.size() - 1).getPrice();
 
-        // 최근의 두 거래를 선택
-        double latestPrice = sumInDeRecords.get(0).getPrice();
-        double previousPrice = sumInDeRecords.get(1).getPrice();
-
-        if (previousPrice == 0) {
+        if (firstPriceOfYesterday == 0) {
             return 0.0;
         }
 
-        return (latestPrice - previousPrice) / previousPrice * 100;
+        return (lastPriceOfYesterday - firstPriceOfYesterday) / firstPriceOfYesterday * 100;
     }
 
     //하락율 산출
     @Cacheable(value = "tradeDecrease", key = "#stock.company")
     public Double getDecreasePercentage(Stock stock) {
-        List<Buy> buys = buyRepository.findTop2ByStockOrderByCreatedAtDesc(stock);
-        List<Sell> sells = sellRepository.findTop2ByStockOrderByCreatedAtDesc(stock);
+        // 어제 날짜 가져오기
 
-        if (sells.size() < 2) return 0.0;
-        if (buys.size() < 2) return 0.0;
+        Buy lastBuyOfYesterday = buyRepository
+                .findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, yesterday.plusDays(1)
+                        .atStartOfDay());
+        Buy lastBuyOfToday = buyRepository
+                .findFirstByStockAndCreatedAtBeforeOrderByCreatedAtDesc(stock, today.plusDays(1)
+                        .atStartOfDay());
+
+        Sell lastSellOfYesterday = sellRepository
+                .findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, yesterday.plusDays(1)
+                        .atStartOfDay());
+        Sell lastSellOfToday = sellRepository
+                .findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, yesterday.plusDays(1)
+                        .atStartOfDay());
 
         List<SumInDeRecord> sumInDeRecords = new ArrayList<>();
 
-        for (Buy buy : buys) {
-            sumInDeRecords.add(new SumInDeRecord(buy.getCreatedAt(), buy.getPrice()));
+        if (lastBuyOfYesterday != null) {
+            sumInDeRecords.add(new SumInDeRecord(lastBuyOfYesterday.getCreatedAt(), lastBuyOfYesterday.getPrice()));
         }
-        for (Sell sell : sells) {
-            sumInDeRecords.add(new SumInDeRecord(sell.getCreatedAt(), sell.getPrice()));
+        if (lastBuyOfToday != null) {
+            sumInDeRecords.add(new SumInDeRecord(lastBuyOfToday.getCreatedAt(), lastBuyOfToday.getPrice()));
+        }
+        if (lastSellOfYesterday != null) {
+            sumInDeRecords.add(new SumInDeRecord(lastSellOfYesterday.getCreatedAt(), lastSellOfYesterday.getPrice()));
+        }
+        if (lastSellOfToday != null) {
+            sumInDeRecords.add(new SumInDeRecord(lastSellOfToday.getCreatedAt(), lastSellOfToday.getPrice()));
         }
 
-        sumInDeRecords.sort(Comparator.comparing(SumInDeRecord::getCreatedAt).reversed());
+        sumInDeRecords.sort(Comparator.comparing(SumInDeRecord::getCreatedAt));
 
-        Double latestPrice = Double.valueOf(sumInDeRecords.get(0).getPrice());
-        Double previousPrice = Double.valueOf(sumInDeRecords.get(1).getPrice());
+        // 가장 빠른 거래와 가장 늦은 거래 선택
+        if (sumInDeRecords.size() < 2) {
+            return 0.0;
+        }
+        double firstPriceOfYesterday = sumInDeRecords.get(0).getPrice();
+        double lastPriceOfYesterday = sumInDeRecords.get(sumInDeRecords.size() - 1).getPrice();
 
-        return (previousPrice - latestPrice) / previousPrice * 100;
+        if (firstPriceOfYesterday == 0) {
+            return 0.0;
+        }
+
+        return (firstPriceOfYesterday - lastPriceOfYesterday) / firstPriceOfYesterday * 100;
     }
 
     //거래량 top 10
     @Cacheable(value = "top10ByTradeVolume")
     public List<RankingVolumeDto> getTop10ByTradeVolume() {
-
         return stockRepository.findAll().stream()
                 .distinct()
                 .map(stock -> new RankingVolumeDto(stock.getCompany(), getTradeVolumeForStock(stock)))

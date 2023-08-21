@@ -1,0 +1,356 @@
+17:03:41.577 [main] [ INFO] c.p.stocker.StockerApplication[logStarting:51] Starting StockerApplication using Java 17.0.8 with PID 18849 (/Users/iuijin/Desktop/stock_proj/stocker-be/build/classes/java/main started by iuijin in /Users/iuijin/Desktop/stock_proj/stocker-be)
+17:03:41.579 [main] [ INFO] c.p.stocker.StockerApplication[logStartupProfileInfo:634] No active profile set, falling back to 1 default profile: "default"
+17:03:42.104 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[multipleStoresDetected:291] Multiple Spring Data modules found, entering strict repository configuration mode
+17:03:42.105 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:138] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+17:03:42.193 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:208] Finished Spring Data repository scanning in 85 ms. Found 4 JPA repository interfaces.
+17:03:42.200 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[multipleStoresDetected:291] Multiple Spring Data modules found, entering strict repository configuration mode
+17:03:42.201 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:138] Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+17:03:42.208 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.BuyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:03:42.209 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.SellRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:03:42.209 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.StockRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:03:42.209 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:03:42.209 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:208] Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+17:03:42.543 [main] [ INFO] o.s.b.w.e.tomcat.TomcatWebServer[initialize:108] Tomcat initialized with port(s): 8080 (https)
+17:03:42.549 [main] [ INFO] o.a.catalina.core.StandardService[log:173] Starting service [Tomcat]
+17:03:42.550 [main] [ INFO] o.a.catalina.core.StandardEngine[log:173] Starting Servlet engine: [Apache Tomcat/10.1.11]
+17:03:42.587 [main] [ INFO] o.a.c.c.C.[Tomcat].[localhost].[/][log:173] Initializing Spring embedded WebApplicationContext
+17:03:42.587 [main] [ INFO] o.s.b.w.s.c.ServletWebServerApplicationContext[prepareWebApplicationContext:291] Root WebApplicationContext: initialization completed in 989 ms
+17:03:42.833 [main] [ INFO] o.h.jpa.internal.util.LogHelper[logPersistenceUnitInformation:31] HHH000204: Processing PersistenceUnitInfo [name: default]
+17:03:42.860 [main] [ INFO] org.hibernate.Version[logVersion:44] HHH000412: Hibernate ORM core version 6.2.6.Final
+17:03:42.862 [main] [ INFO] org.hibernate.cfg.Environment[<clinit>:191] HHH000406: Using bytecode reflection optimizer
+17:03:42.930 [main] [ INFO] o.h.b.i.BytecodeProviderInitiator[buildBytecodeProvider:53] HHH000021: Bytecode provider name : bytebuddy
+17:03:42.997 [main] [ INFO] o.s.o.j.p.SpringPersistenceUnitInfo[addTransformer:87] No LoadTimeWeaver setup: ignoring JPA class transformer
+17:03:43.005 [main] [ INFO] com.zaxxer.hikari.HikariDataSource[getConnection:110] HikariPool-1 - Starting...
+17:03:43.320 [main] [ INFO] com.zaxxer.hikari.pool.HikariPool[checkFailFast:565] HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@9d2c0ed
+17:03:43.321 [main] [ INFO] com.zaxxer.hikari.HikariDataSource[getConnection:123] HikariPool-1 - Start completed.
+17:03:43.489 [main] [ INFO] o.h.b.i.BytecodeProviderInitiator[buildBytecodeProvider:53] HHH000021: Bytecode provider name : bytebuddy
+17:03:43.817 [main] [ INFO] o.h.e.t.j.p.i.JtaPlatformInitiator[initiateService:51] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+17:03:44.754 [main] [ INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean[buildNativeEntityManagerFactory:437] Initialized JPA EntityManagerFactory for persistence unit 'default'
+17:03:45.068 [main] [ WARN] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[openEntityManagerInViewInterceptor:231] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+17:03:45.459 [main] [ INFO] o.s.b.a.e.web.EndpointLinksResolver[<init>:58] Exposing 4 endpoint(s) beneath base path '/actuator'
+17:03:45.485 [main] [ INFO] o.s.s.w.DefaultSecurityFilterChain[<init>:54] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6b29771f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4f991f00, org.springframework.security.web.context.SecurityContextHolderFilter@660b8572, org.springframework.security.web.header.HeaderWriterFilter@1fdc2d45, org.springframework.security.web.authentication.logout.LogoutFilter@62267a22, com.project.stocker.filter.JwtAuthorizationFilter@158774d3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@603042a5, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@75ba33b8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2e02cc02, org.springframework.security.web.session.SessionManagementFilter@5cfb4b71, org.springframework.security.web.access.ExceptionTranslationFilter@337fac72, org.springframework.security.web.access.intercept.AuthorizationFilter@61d8a98b]
+17:03:45.711 [main] [ INFO] o.a.t.u.net.NioEndpoint.certificate[log:173] Connector [https-jsse-nio-8080], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [/Users/iuijin:.keystore] using alias [tomcat] with trust store [null]
+17:03:45.719 [main] [ INFO] o.s.b.w.e.tomcat.TomcatWebServer[start:220] Tomcat started on port(s): 8080 (https) with context path ''
+17:03:45.729 [main] [ INFO] c.p.stocker.StockerApplication[logStarted:57] Started StockerApplication in 6.56 seconds (process running for 6.899)
+17:04:10.906 [SpringApplicationShutdownHook] [ INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean[destroy:650] Closing JPA EntityManagerFactory for persistence unit 'default'
+17:04:10.909 [SpringApplicationShutdownHook] [ INFO] com.zaxxer.hikari.HikariDataSource[close:350] HikariPool-1 - Shutdown initiated...
+17:04:11.035 [SpringApplicationShutdownHook] [ INFO] com.zaxxer.hikari.HikariDataSource[close:352] HikariPool-1 - Shutdown completed.
+17:04:17.796 [main] [ INFO] c.p.stocker.StockerApplication[logStarting:51] Starting StockerApplication using Java 17.0.8 with PID 18877 (/Users/iuijin/Desktop/stock_proj/stocker-be/build/classes/java/main started by iuijin in /Users/iuijin/Desktop/stock_proj/stocker-be)
+17:04:17.799 [main] [ INFO] c.p.stocker.StockerApplication[logStartupProfileInfo:634] No active profile set, falling back to 1 default profile: "default"
+17:04:18.318 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[multipleStoresDetected:291] Multiple Spring Data modules found, entering strict repository configuration mode
+17:04:18.320 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:138] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+17:04:18.396 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:208] Finished Spring Data repository scanning in 73 ms. Found 4 JPA repository interfaces.
+17:04:18.402 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[multipleStoresDetected:291] Multiple Spring Data modules found, entering strict repository configuration mode
+17:04:18.403 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:138] Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+17:04:18.410 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.BuyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:04:18.411 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.SellRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:04:18.411 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.StockRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:04:18.411 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:04:18.411 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:208] Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+17:04:18.725 [main] [ INFO] o.s.b.w.e.tomcat.TomcatWebServer[initialize:108] Tomcat initialized with port(s): 8080 (https)
+17:04:18.731 [main] [ INFO] o.a.catalina.core.StandardService[log:173] Starting service [Tomcat]
+17:04:18.731 [main] [ INFO] o.a.catalina.core.StandardEngine[log:173] Starting Servlet engine: [Apache Tomcat/10.1.11]
+17:04:18.766 [main] [ INFO] o.a.c.c.C.[Tomcat].[localhost].[/][log:173] Initializing Spring embedded WebApplicationContext
+17:04:18.766 [main] [ INFO] o.s.b.w.s.c.ServletWebServerApplicationContext[prepareWebApplicationContext:291] Root WebApplicationContext: initialization completed in 947 ms
+17:04:18.999 [main] [ INFO] o.h.jpa.internal.util.LogHelper[logPersistenceUnitInformation:31] HHH000204: Processing PersistenceUnitInfo [name: default]
+17:04:19.024 [main] [ INFO] org.hibernate.Version[logVersion:44] HHH000412: Hibernate ORM core version 6.2.6.Final
+17:04:19.026 [main] [ INFO] org.hibernate.cfg.Environment[<clinit>:191] HHH000406: Using bytecode reflection optimizer
+17:04:19.080 [main] [ INFO] o.h.b.i.BytecodeProviderInitiator[buildBytecodeProvider:53] HHH000021: Bytecode provider name : bytebuddy
+17:04:19.158 [main] [ INFO] o.s.o.j.p.SpringPersistenceUnitInfo[addTransformer:87] No LoadTimeWeaver setup: ignoring JPA class transformer
+17:04:19.167 [main] [ INFO] com.zaxxer.hikari.HikariDataSource[getConnection:110] HikariPool-1 - Starting...
+17:04:19.442 [main] [ INFO] com.zaxxer.hikari.pool.HikariPool[checkFailFast:565] HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@574134ba
+17:04:19.444 [main] [ INFO] com.zaxxer.hikari.HikariDataSource[getConnection:123] HikariPool-1 - Start completed.
+17:04:19.618 [main] [ INFO] o.h.b.i.BytecodeProviderInitiator[buildBytecodeProvider:53] HHH000021: Bytecode provider name : bytebuddy
+17:04:19.958 [main] [ INFO] o.h.e.t.j.p.i.JtaPlatformInitiator[initiateService:51] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+17:04:20.455 [main] [ INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean[buildNativeEntityManagerFactory:437] Initialized JPA EntityManagerFactory for persistence unit 'default'
+17:04:20.789 [main] [ WARN] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[openEntityManagerInViewInterceptor:231] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+17:04:21.187 [main] [ INFO] o.s.b.a.e.web.EndpointLinksResolver[<init>:58] Exposing 4 endpoint(s) beneath base path '/actuator'
+17:04:21.215 [main] [ INFO] o.s.s.w.DefaultSecurityFilterChain[<init>:54] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3f1bde96, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3776c917, org.springframework.security.web.context.SecurityContextHolderFilter@22938166, org.springframework.security.web.header.HeaderWriterFilter@36642182, org.springframework.security.web.authentication.logout.LogoutFilter@1f953e51, com.project.stocker.filter.JwtAuthorizationFilter@12639753, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@58d85a00, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6ddd71cc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2cf88ae1, org.springframework.security.web.session.SessionManagementFilter@20ee12d8, org.springframework.security.web.access.ExceptionTranslationFilter@eb8d539, org.springframework.security.web.access.intercept.AuthorizationFilter@660dcd17]
+17:04:21.492 [main] [ INFO] o.a.t.u.net.NioEndpoint.certificate[log:173] Connector [https-jsse-nio-8080], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [/Users/iuijin:.keystore] using alias [tomcat] with trust store [null]
+17:04:21.517 [main] [ INFO] o.s.b.w.e.tomcat.TomcatWebServer[start:220] Tomcat started on port(s): 8080 (https) with context path ''
+17:04:21.529 [main] [ INFO] c.p.stocker.StockerApplication[logStarted:57] Started StockerApplication in 4.119 seconds (process running for 4.449)
+17:04:27.005 [https-jsse-nio-8080-exec-6] [ INFO] o.a.c.c.C.[Tomcat].[localhost].[/][log:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+17:04:27.005 [https-jsse-nio-8080-exec-6] [ INFO] o.s.web.servlet.DispatcherServlet[initServletBean:532] Initializing Servlet 'dispatcherServlet'
+17:04:27.007 [https-jsse-nio-8080-exec-6] [ INFO] o.s.web.servlet.DispatcherServlet[initServletBean:554] Completed initialization in 2 ms
+17:07:10.727 [SpringApplicationShutdownHook] [ INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean[destroy:650] Closing JPA EntityManagerFactory for persistence unit 'default'
+17:07:10.730 [SpringApplicationShutdownHook] [ INFO] com.zaxxer.hikari.HikariDataSource[close:350] HikariPool-1 - Shutdown initiated...
+17:07:10.859 [SpringApplicationShutdownHook] [ INFO] com.zaxxer.hikari.HikariDataSource[close:352] HikariPool-1 - Shutdown completed.
+17:07:17.074 [main] [ INFO] c.p.stocker.StockerApplication[logStarting:51] Starting StockerApplication using Java 17.0.8 with PID 18946 (/Users/iuijin/Desktop/stock_proj/stocker-be/build/classes/java/main started by iuijin in /Users/iuijin/Desktop/stock_proj/stocker-be)
+17:07:17.077 [main] [ INFO] c.p.stocker.StockerApplication[logStartupProfileInfo:634] No active profile set, falling back to 1 default profile: "default"
+17:07:17.609 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[multipleStoresDetected:291] Multiple Spring Data modules found, entering strict repository configuration mode
+17:07:17.611 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:138] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+17:07:17.695 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:208] Finished Spring Data repository scanning in 81 ms. Found 4 JPA repository interfaces.
+17:07:17.702 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[multipleStoresDetected:291] Multiple Spring Data modules found, entering strict repository configuration mode
+17:07:17.703 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:138] Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+17:07:17.711 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.BuyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:07:17.712 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.SellRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:07:17.712 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.StockRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:07:17.712 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:07:17.713 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:208] Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+17:07:18.079 [main] [ INFO] o.s.b.w.e.tomcat.TomcatWebServer[initialize:108] Tomcat initialized with port(s): 8080 (https)
+17:07:18.085 [main] [ INFO] o.a.catalina.core.StandardService[log:173] Starting service [Tomcat]
+17:07:18.086 [main] [ INFO] o.a.catalina.core.StandardEngine[log:173] Starting Servlet engine: [Apache Tomcat/10.1.11]
+17:07:18.122 [main] [ INFO] o.a.c.c.C.[Tomcat].[localhost].[/][log:173] Initializing Spring embedded WebApplicationContext
+17:07:18.122 [main] [ INFO] o.s.b.w.s.c.ServletWebServerApplicationContext[prepareWebApplicationContext:291] Root WebApplicationContext: initialization completed in 1023 ms
+17:07:18.421 [main] [ INFO] o.h.jpa.internal.util.LogHelper[logPersistenceUnitInformation:31] HHH000204: Processing PersistenceUnitInfo [name: default]
+17:07:18.458 [main] [ INFO] org.hibernate.Version[logVersion:44] HHH000412: Hibernate ORM core version 6.2.6.Final
+17:07:18.461 [main] [ INFO] org.hibernate.cfg.Environment[<clinit>:191] HHH000406: Using bytecode reflection optimizer
+17:07:18.523 [main] [ INFO] o.h.b.i.BytecodeProviderInitiator[buildBytecodeProvider:53] HHH000021: Bytecode provider name : bytebuddy
+17:07:18.605 [main] [ INFO] o.s.o.j.p.SpringPersistenceUnitInfo[addTransformer:87] No LoadTimeWeaver setup: ignoring JPA class transformer
+17:07:18.615 [main] [ INFO] com.zaxxer.hikari.HikariDataSource[getConnection:110] HikariPool-1 - Starting...
+17:07:18.906 [main] [ INFO] com.zaxxer.hikari.pool.HikariPool[checkFailFast:565] HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2fcad739
+17:07:18.907 [main] [ INFO] com.zaxxer.hikari.HikariDataSource[getConnection:123] HikariPool-1 - Start completed.
+17:07:19.095 [main] [ INFO] o.h.b.i.BytecodeProviderInitiator[buildBytecodeProvider:53] HHH000021: Bytecode provider name : bytebuddy
+17:07:19.446 [main] [ INFO] o.h.e.t.j.p.i.JtaPlatformInitiator[initiateService:51] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+17:07:19.982 [main] [ INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean[buildNativeEntityManagerFactory:437] Initialized JPA EntityManagerFactory for persistence unit 'default'
+17:07:20.325 [main] [ WARN] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[openEntityManagerInViewInterceptor:231] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+17:07:20.728 [main] [ INFO] o.s.b.a.e.web.EndpointLinksResolver[<init>:58] Exposing 4 endpoint(s) beneath base path '/actuator'
+17:07:20.757 [main] [ INFO] o.s.s.w.DefaultSecurityFilterChain[<init>:54] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@72cbe3b6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7aadb5e8, org.springframework.security.web.context.SecurityContextHolderFilter@4cef1ea6, org.springframework.security.web.header.HeaderWriterFilter@69cd4267, org.springframework.security.web.authentication.logout.LogoutFilter@2d5cb059, com.project.stocker.filter.JwtAuthorizationFilter@50fbb66a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@21eb33d4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@20ee12d8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6f8060ac, org.springframework.security.web.session.SessionManagementFilter@5b1505c3, org.springframework.security.web.access.ExceptionTranslationFilter@664f1c53, org.springframework.security.web.access.intercept.AuthorizationFilter@559baea1]
+17:07:21.004 [main] [ INFO] o.a.t.u.net.NioEndpoint.certificate[log:173] Connector [https-jsse-nio-8080], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [/Users/iuijin:.keystore] using alias [tomcat] with trust store [null]
+17:07:21.013 [main] [ INFO] o.s.b.w.e.tomcat.TomcatWebServer[start:220] Tomcat started on port(s): 8080 (https) with context path ''
+17:07:21.023 [main] [ INFO] c.p.stocker.StockerApplication[logStarted:57] Started StockerApplication in 6.373 seconds (process running for 6.713)
+17:07:26.471 [https-jsse-nio-8080-exec-6] [ INFO] o.a.c.c.C.[Tomcat].[localhost].[/][log:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+17:07:26.472 [https-jsse-nio-8080-exec-6] [ INFO] o.s.web.servlet.DispatcherServlet[initServletBean:532] Initializing Servlet 'dispatcherServlet'
+17:07:26.473 [https-jsse-nio-8080-exec-6] [ INFO] o.s.web.servlet.DispatcherServlet[initServletBean:554] Completed initialization in 1 ms
+17:10:45.291 [SpringApplicationShutdownHook] [ INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean[destroy:650] Closing JPA EntityManagerFactory for persistence unit 'default'
+17:10:45.296 [SpringApplicationShutdownHook] [ INFO] com.zaxxer.hikari.HikariDataSource[close:350] HikariPool-1 - Shutdown initiated...
+17:10:45.417 [SpringApplicationShutdownHook] [ INFO] com.zaxxer.hikari.HikariDataSource[close:352] HikariPool-1 - Shutdown completed.
+17:10:51.481 [main] [ INFO] c.p.stocker.StockerApplication[logStarting:51] Starting StockerApplication using Java 17.0.8 with PID 19039 (/Users/iuijin/Desktop/stock_proj/stocker-be/build/classes/java/main started by iuijin in /Users/iuijin/Desktop/stock_proj/stocker-be)
+17:10:51.484 [main] [ INFO] c.p.stocker.StockerApplication[logStartupProfileInfo:634] No active profile set, falling back to 1 default profile: "default"
+17:10:52.057 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[multipleStoresDetected:291] Multiple Spring Data modules found, entering strict repository configuration mode
+17:10:52.058 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:138] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+17:10:52.135 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:208] Finished Spring Data repository scanning in 73 ms. Found 4 JPA repository interfaces.
+17:10:52.142 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[multipleStoresDetected:291] Multiple Spring Data modules found, entering strict repository configuration mode
+17:10:52.143 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:138] Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+17:10:52.151 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.BuyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:10:52.151 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.SellRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:10:52.151 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.StockRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:10:52.151 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:10:52.152 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:208] Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+17:10:52.470 [main] [ INFO] o.s.b.w.e.tomcat.TomcatWebServer[initialize:108] Tomcat initialized with port(s): 8080 (https)
+17:10:52.476 [main] [ INFO] o.a.catalina.core.StandardService[log:173] Starting service [Tomcat]
+17:10:52.476 [main] [ INFO] o.a.catalina.core.StandardEngine[log:173] Starting Servlet engine: [Apache Tomcat/10.1.11]
+17:10:52.508 [main] [ INFO] o.a.c.c.C.[Tomcat].[localhost].[/][log:173] Initializing Spring embedded WebApplicationContext
+17:10:52.508 [main] [ INFO] o.s.b.w.s.c.ServletWebServerApplicationContext[prepareWebApplicationContext:291] Root WebApplicationContext: initialization completed in 1006 ms
+17:10:52.736 [main] [ INFO] o.h.jpa.internal.util.LogHelper[logPersistenceUnitInformation:31] HHH000204: Processing PersistenceUnitInfo [name: default]
+17:10:52.769 [main] [ INFO] org.hibernate.Version[logVersion:44] HHH000412: Hibernate ORM core version 6.2.6.Final
+17:10:52.771 [main] [ INFO] org.hibernate.cfg.Environment[<clinit>:191] HHH000406: Using bytecode reflection optimizer
+17:10:52.829 [main] [ INFO] o.h.b.i.BytecodeProviderInitiator[buildBytecodeProvider:53] HHH000021: Bytecode provider name : bytebuddy
+17:10:52.894 [main] [ INFO] o.s.o.j.p.SpringPersistenceUnitInfo[addTransformer:87] No LoadTimeWeaver setup: ignoring JPA class transformer
+17:10:52.903 [main] [ INFO] com.zaxxer.hikari.HikariDataSource[getConnection:110] HikariPool-1 - Starting...
+17:10:53.212 [main] [ INFO] com.zaxxer.hikari.pool.HikariPool[checkFailFast:565] HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@e98adb2
+17:10:53.214 [main] [ INFO] com.zaxxer.hikari.HikariDataSource[getConnection:123] HikariPool-1 - Start completed.
+17:10:53.391 [main] [ INFO] o.h.b.i.BytecodeProviderInitiator[buildBytecodeProvider:53] HHH000021: Bytecode provider name : bytebuddy
+17:10:53.716 [main] [ INFO] o.h.e.t.j.p.i.JtaPlatformInitiator[initiateService:51] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+17:10:54.203 [main] [ INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean[buildNativeEntityManagerFactory:437] Initialized JPA EntityManagerFactory for persistence unit 'default'
+17:10:54.530 [main] [ WARN] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[openEntityManagerInViewInterceptor:231] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+17:10:54.931 [main] [ INFO] o.s.b.a.e.web.EndpointLinksResolver[<init>:58] Exposing 4 endpoint(s) beneath base path '/actuator'
+17:10:54.960 [main] [ INFO] o.s.s.w.DefaultSecurityFilterChain[<init>:54] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@74eebb25, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@c1e7bea, org.springframework.security.web.context.SecurityContextHolderFilter@6b36ab82, org.springframework.security.web.header.HeaderWriterFilter@184b8899, org.springframework.security.web.authentication.logout.LogoutFilter@14eaab92, com.project.stocker.filter.JwtAuthorizationFilter@282c3aa0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1f953e51, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2d95c3ef, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3af30ab8, org.springframework.security.web.session.SessionManagementFilter@2680474c, org.springframework.security.web.access.ExceptionTranslationFilter@7828111d, org.springframework.security.web.access.intercept.AuthorizationFilter@3fb8e614]
+17:10:55.180 [main] [ INFO] o.a.t.u.net.NioEndpoint.certificate[log:173] Connector [https-jsse-nio-8080], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [/Users/iuijin:.keystore] using alias [tomcat] with trust store [null]
+17:10:55.188 [main] [ INFO] o.s.b.w.e.tomcat.TomcatWebServer[start:220] Tomcat started on port(s): 8080 (https) with context path ''
+17:10:55.198 [main] [ INFO] c.p.stocker.StockerApplication[logStarted:57] Started StockerApplication in 6.115 seconds (process running for 6.43)
+17:10:58.759 [https-jsse-nio-8080-exec-6] [ INFO] o.a.c.c.C.[Tomcat].[localhost].[/][log:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+17:10:58.760 [https-jsse-nio-8080-exec-6] [ INFO] o.s.web.servlet.DispatcherServlet[initServletBean:532] Initializing Servlet 'dispatcherServlet'
+17:10:58.761 [https-jsse-nio-8080-exec-6] [ INFO] o.s.web.servlet.DispatcherServlet[initServletBean:554] Completed initialization in 1 ms
+17:12:41.191 [SpringApplicationShutdownHook] [ INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean[destroy:650] Closing JPA EntityManagerFactory for persistence unit 'default'
+17:12:41.195 [SpringApplicationShutdownHook] [ INFO] com.zaxxer.hikari.HikariDataSource[close:350] HikariPool-1 - Shutdown initiated...
+17:12:41.337 [SpringApplicationShutdownHook] [ INFO] com.zaxxer.hikari.HikariDataSource[close:352] HikariPool-1 - Shutdown completed.
+17:12:47.392 [main] [ INFO] c.p.stocker.StockerApplication[logStarting:51] Starting StockerApplication using Java 17.0.8 with PID 19086 (/Users/iuijin/Desktop/stock_proj/stocker-be/build/classes/java/main started by iuijin in /Users/iuijin/Desktop/stock_proj/stocker-be)
+17:12:47.394 [main] [ INFO] c.p.stocker.StockerApplication[logStartupProfileInfo:634] No active profile set, falling back to 1 default profile: "default"
+17:12:47.928 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[multipleStoresDetected:291] Multiple Spring Data modules found, entering strict repository configuration mode
+17:12:47.930 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:138] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+17:12:48.010 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:208] Finished Spring Data repository scanning in 76 ms. Found 4 JPA repository interfaces.
+17:12:48.016 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[multipleStoresDetected:291] Multiple Spring Data modules found, entering strict repository configuration mode
+17:12:48.017 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:138] Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+17:12:48.025 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.BuyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:12:48.026 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.SellRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:12:48.026 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.StockRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:12:48.026 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationExtensionSupport[isStrictRepositoryCandidate:320] Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.project.stocker.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+17:12:48.026 [main] [ INFO] o.s.d.r.c.RepositoryConfigurationDelegate[registerRepositoriesIn:208] Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+17:12:48.367 [main] [ INFO] o.s.b.w.e.tomcat.TomcatWebServer[initialize:108] Tomcat initialized with port(s): 8080 (https)
+17:12:48.374 [main] [ INFO] o.a.catalina.core.StandardService[log:173] Starting service [Tomcat]
+17:12:48.377 [main] [ INFO] o.a.catalina.core.StandardEngine[log:173] Starting Servlet engine: [Apache Tomcat/10.1.11]
+17:12:48.415 [main] [ INFO] o.a.c.c.C.[Tomcat].[localhost].[/][log:173] Initializing Spring embedded WebApplicationContext
+17:12:48.416 [main] [ INFO] o.s.b.w.s.c.ServletWebServerApplicationContext[prepareWebApplicationContext:291] Root WebApplicationContext: initialization completed in 1002 ms
+17:12:48.653 [main] [ INFO] o.h.jpa.internal.util.LogHelper[logPersistenceUnitInformation:31] HHH000204: Processing PersistenceUnitInfo [name: default]
+17:12:48.680 [main] [ INFO] org.hibernate.Version[logVersion:44] HHH000412: Hibernate ORM core version 6.2.6.Final
+17:12:48.682 [main] [ INFO] org.hibernate.cfg.Environment[<clinit>:191] HHH000406: Using bytecode reflection optimizer
+17:12:48.740 [main] [ INFO] o.h.b.i.BytecodeProviderInitiator[buildBytecodeProvider:53] HHH000021: Bytecode provider name : bytebuddy
+17:12:48.821 [main] [ INFO] o.s.o.j.p.SpringPersistenceUnitInfo[addTransformer:87] No LoadTimeWeaver setup: ignoring JPA class transformer
+17:12:48.829 [main] [ INFO] com.zaxxer.hikari.HikariDataSource[getConnection:110] HikariPool-1 - Starting...
+17:12:49.126 [main] [ INFO] com.zaxxer.hikari.pool.HikariPool[checkFailFast:565] HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@79a92277
+17:12:49.128 [main] [ INFO] com.zaxxer.hikari.HikariDataSource[getConnection:123] HikariPool-1 - Start completed.
+17:12:49.296 [main] [ INFO] o.h.b.i.BytecodeProviderInitiator[buildBytecodeProvider:53] HHH000021: Bytecode provider name : bytebuddy
+17:12:49.633 [main] [ INFO] o.h.e.t.j.p.i.JtaPlatformInitiator[initiateService:51] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+17:12:50.117 [main] [ INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean[buildNativeEntityManagerFactory:437] Initialized JPA EntityManagerFactory for persistence unit 'default'
+17:12:50.455 [main] [ WARN] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration[openEntityManagerInViewInterceptor:231] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+17:12:50.833 [main] [ INFO] o.s.b.a.e.web.EndpointLinksResolver[<init>:58] Exposing 4 endpoint(s) beneath base path '/actuator'
+17:12:50.859 [main] [ INFO] o.s.s.w.DefaultSecurityFilterChain[<init>:54] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7aadb5e8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6f8060ac, org.springframework.security.web.context.SecurityContextHolderFilter@3f2731e5, org.springframework.security.web.header.HeaderWriterFilter@1ebb6e20, org.springframework.security.web.authentication.logout.LogoutFilter@23591a2c, com.project.stocker.filter.JwtAuthorizationFilter@12bb0322, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6a636c62, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@519f6adb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@308a2eb0, org.springframework.security.web.session.SessionManagementFilter@4c6a5712, org.springframework.security.web.access.ExceptionTranslationFilter@20bd4fd2, org.springframework.security.web.access.intercept.AuthorizationFilter@6eef7af3]
+17:12:51.099 [main] [ INFO] o.a.t.u.net.NioEndpoint.certificate[log:173] Connector [https-jsse-nio-8080], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [/Users/iuijin:.keystore] using alias [tomcat] with trust store [null]
+17:12:51.108 [main] [ INFO] o.s.b.w.e.tomcat.TomcatWebServer[start:220] Tomcat started on port(s): 8080 (https) with context path ''
+17:12:51.118 [main] [ INFO] c.p.stocker.StockerApplication[logStarted:57] Started StockerApplication in 6.127 seconds (process running for 6.474)
+17:13:00.282 [https-jsse-nio-8080-exec-6] [ INFO] o.a.c.c.C.[Tomcat].[localhost].[/][log:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+17:13:00.282 [https-jsse-nio-8080-exec-6] [ INFO] o.s.web.servlet.DispatcherServlet[initServletBean:532] Initializing Servlet 'dispatcherServlet'
+17:13:00.284 [https-jsse-nio-8080-exec-6] [ INFO] o.s.web.servlet.DispatcherServlet[initServletBean:554] Completed initialization in 1 ms
+17:56:50.244 [https-jsse-nio-8080-exec-5] [ERROR] JwtUtil[validateToken:150] Expired JWT token, 만료된 JWT token 입니다.
+17:58:36.856 [https-jsse-nio-8080-exec-2] [ERROR] JwtUtil[validateToken:150] Expired JWT token, 만료된 JWT token 입니다.
+17:58:36.862 [https-jsse-nio-8080-exec-2] [ERROR] o.a.c.c.C.[.[.[.[dispatcherServlet][log:175] Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+java.lang.IllegalArgumentException: JWT String argument cannot be null or empty.
+	at io.jsonwebtoken.lang.Assert.hasText(Assert.java:132)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:527)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:589)
+	at io.jsonwebtoken.impl.ImmutableJwtParser.parseClaimsJws(ImmutableJwtParser.java:173)
+	at com.project.stocker.jwt.JwtUtil.getUserInfoFromToken(JwtUtil.java:161)
+	at com.project.stocker.jwt.JwtUtil.getUserEmailFromToken(JwtUtil.java:177)
+	at com.project.stocker.filter.JwtAuthorizationFilter.doFilterInternal(JwtAuthorizationFilter.java:46)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:109)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:166)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:894)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1740)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+18:01:34.010 [https-jsse-nio-8080-exec-10] [ERROR] JwtUtil[validateToken:150] Expired JWT token, 만료된 JWT token 입니다.
+18:01:34.013 [https-jsse-nio-8080-exec-10] [ERROR] o.a.c.c.C.[.[.[.[dispatcherServlet][log:175] Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+java.lang.IllegalArgumentException: JWT String argument cannot be null or empty.
+	at io.jsonwebtoken.lang.Assert.hasText(Assert.java:132)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:527)
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:589)
+	at io.jsonwebtoken.impl.ImmutableJwtParser.parseClaimsJws(ImmutableJwtParser.java:173)
+	at com.project.stocker.jwt.JwtUtil.getUserInfoFromToken(JwtUtil.java:161)
+	at com.project.stocker.jwt.JwtUtil.getUserEmailFromToken(JwtUtil.java:177)
+	at com.project.stocker.filter.JwtAuthorizationFilter.doFilterInternal(JwtAuthorizationFilter.java:46)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:109)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:166)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:894)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1740)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+19:23:44.839 [SpringApplicationShutdownHook] [ INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean[destroy:650] Closing JPA EntityManagerFactory for persistence unit 'default'
+19:23:44.843 [SpringApplicationShutdownHook] [ INFO] com.zaxxer.hikari.HikariDataSource[close:350] HikariPool-1 - Shutdown initiated...
+19:23:44.981 [SpringApplicationShutdownHook] [ INFO] com.zaxxer.hikari.HikariDataSource[close:352] HikariPool-1 - Shutdown completed.
