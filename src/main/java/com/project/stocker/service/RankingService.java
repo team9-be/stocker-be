@@ -140,6 +140,7 @@ public class RankingService {
             sumInDeRecords.add(new SumInDeRecord(lastSellOfToday.getCreatedAt(), lastSellOfToday.getPrice()));
         }
 
+
         sumInDeRecords.sort(Comparator.comparing(SumInDeRecord::getCreatedAt));
 
         // 가장 빠른 거래와 가장 늦은 거래 선택
@@ -148,6 +149,7 @@ public class RankingService {
         }
         double firstPriceOfYesterday = sumInDeRecords.get(0).getPrice();
         double lastPriceOfYesterday = sumInDeRecords.get(sumInDeRecords.size() - 1).getPrice();
+
 
         if (firstPriceOfYesterday == 0) {
             return 0.0;
