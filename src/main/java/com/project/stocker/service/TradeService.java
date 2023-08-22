@@ -19,8 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class TradeService {
     private final TradeRepository tradeRepository;
     private final StockRepository stockRepository;

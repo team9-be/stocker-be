@@ -5,11 +5,15 @@ import com.project.stocker.dto.response.TradeCreateResponseDto;
 import com.project.stocker.dto.response.TradeDeleteResponseDto;
 import com.project.stocker.dto.response.TradeUpdateResponseDto;
 import com.project.stocker.service.TradeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/trade")
 public class TradeController {
+
+    private final TradeService TradeService;
 
     // BUY
     @PostMapping("/buy")
