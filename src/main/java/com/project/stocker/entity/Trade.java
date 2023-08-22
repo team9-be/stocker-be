@@ -6,10 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -57,9 +53,9 @@ public class Trade extends Auditing {
 
 
     public static class Builder {
-        private Long quantity;
-        private Long price;
-        private Stock stock;
+        private final Long quantity;
+        private final Long price;
+        private final Stock stock;
         private User buyer;
         private User seller;
         private String status;
@@ -69,7 +65,6 @@ public class Trade extends Auditing {
             this.price = price;
             this.stock = stock;
         }
-
 
 
         public Builder buyer(User buyer) {

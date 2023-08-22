@@ -31,10 +31,10 @@ public class User extends Auditing {
 
     private boolean status;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "buyer")
     private List<Trade> buys = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "seller")
     private List<Trade> sells = new ArrayList<>();
 
     public User(String username, String password, String email, UserRoleEnum role) {
