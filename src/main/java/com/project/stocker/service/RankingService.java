@@ -4,7 +4,6 @@ import com.project.stocker.dto.response.RankingDecreaseDto;
 import com.project.stocker.dto.response.RankingIncreaseDto;
 import com.project.stocker.dto.response.RankingVolumeDto;
 import com.project.stocker.entity.Buy;
-import com.project.stocker.entity.Sell;
 import com.project.stocker.entity.Stock;
 import com.project.stocker.repository.BuyRepository;
 import com.project.stocker.repository.SellRepository;

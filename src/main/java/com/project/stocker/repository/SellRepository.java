@@ -1,6 +1,5 @@
 package com.project.stocker.repository;
 
-import com.project.stocker.entity.Sell;
 import com.project.stocker.entity.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 

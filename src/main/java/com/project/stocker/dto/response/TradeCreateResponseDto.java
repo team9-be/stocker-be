@@ -5,8 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BuyDeleteResponseDto extends TradeDto{
-    public BuyDeleteResponseDto(int statusCode, String msg) {
+public class TradeCreateResponseDto extends TradeDto{
+    public TradeCreateResponseDto(int statusCode, String msg) {
         super(statusCode, msg);
     }
+
 }
