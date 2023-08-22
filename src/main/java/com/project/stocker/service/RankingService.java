@@ -9,8 +9,10 @@ import com.project.stocker.entity.Stock;
 import com.project.stocker.repository.BuyRepository;
 import com.project.stocker.repository.SellRepository;
 import com.project.stocker.repository.StockRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,16 @@ public class RankingService {
     LocalDate yesterday = LocalDate.now().minusDays(1);
     LocalDate today = LocalDate.now();
 
+    private IncreasePercentageCalculator increasePercentageCalculator;
+    private DecreasePercentageCalculator decreasePercentageCalculator;
+
+    @PostConstruct
+    public void init() {
+        this.increasePercentageCalculator = new IncreasePercentageCalculator(buyRepository, sellRepository);
+        this.decreasePercentageCalculator = new DecreasePercentageCalculator(buyRepository, sellRepository);
+    }
+
+
     // 거래량 산출
     @Cacheable(value = "tradeVolume", key = "#stock.company")
     public Long getTradeVolumeForStock(Stock stock) {
@@ -57,105 +69,32 @@ public class RankingService {
     }
 
     // 상승율 산출
-    @Cacheable(value = "tradeIncrease", key = "#stock.company")
-    public Double getIncreasePercentage(Stock stock) {
-//        Stock cachedStock = getCacheForStock(stock);
+    @Cacheable(value = "increasePercent", key = "#stock.company")
 
-        Buy lastBuyOfYesterday = buyRepository
-                .findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, yesterday.plusDays(1)
-                        .atStartOfDay());
-        Buy lastBuyOfToday = buyRepository
-                .findFirstByStockAndCreatedAtBeforeOrderByCreatedAtDesc(stock, today.plusDays(1)
-                        .atStartOfDay());
+    public class IncreasePercentageCalculator extends TradePercentageCalculator{
 
-        Sell lastSellOfYesterday = sellRepository
-                .findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, yesterday.plusDays(1)
-                        .atStartOfDay());
-        Sell lastSellOfToday = sellRepository
-                .findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, yesterday.plusDays(1)
-                        .atStartOfDay());
-
-        List<SumInDeRecord> sumInDeRecords = new ArrayList<>();
-
-        if (lastBuyOfYesterday != null) {
-            sumInDeRecords.add(new SumInDeRecord(lastBuyOfYesterday.getCreatedAt(), lastBuyOfYesterday.getPrice()));
-        }
-        if (lastBuyOfToday != null) {
-            sumInDeRecords.add(new SumInDeRecord(lastBuyOfToday.getCreatedAt(), lastBuyOfToday.getPrice()));
-        }
-        if (lastSellOfYesterday != null) {
-            sumInDeRecords.add(new SumInDeRecord(lastSellOfYesterday.getCreatedAt(), lastSellOfYesterday.getPrice()));
-        }
-        if (lastSellOfToday != null) {
-            sumInDeRecords.add(new SumInDeRecord(lastSellOfToday.getCreatedAt(), lastSellOfToday.getPrice()));
+        public IncreasePercentageCalculator(BuyRepository buyRepository, SellRepository sellRepository) {
+            super(buyRepository, sellRepository);
         }
 
-        sumInDeRecords.sort(Comparator.comparing(SumInDeRecord::getCreatedAt));
-
-        // 가장 빠른 거래와 가장 늦은 거래 선택
-        if (sumInDeRecords.size() < 2) {
-            return 0.0;
+        @Override
+        protected Double calculatePercentage(double firstPrice, double lastPrice) {
+            return (lastPrice - firstPrice) / firstPrice * 100;
         }
-        double firstPriceOfYesterday = sumInDeRecords.get(0).getPrice();
-        double lastPriceOfYesterday = sumInDeRecords.get(sumInDeRecords.size() - 1).getPrice();
-
-        if (firstPriceOfYesterday == 0) {
-            return 0.0;
-        }
-
-        return (lastPriceOfYesterday - firstPriceOfYesterday) / firstPriceOfYesterday * 100;
     }
 
     //하락율 산출
-    @Cacheable(value = "tradeDecrease", key = "#stock.company")
-    public Double getDecreasePercentage(Stock stock) {
-        // 어제 날짜 가져오기
+    @Cacheable(value = "DecreasePercent", key = "#stock.company")
+    public class DecreasePercentageCalculator extends TradePercentageCalculator{
 
-        Buy lastBuyOfYesterday = buyRepository
-                .findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, yesterday.plusDays(1)
-                        .atStartOfDay());
-        Buy lastBuyOfToday = buyRepository
-                .findFirstByStockAndCreatedAtBeforeOrderByCreatedAtDesc(stock, today.plusDays(1)
-                        .atStartOfDay());
-
-        Sell lastSellOfYesterday = sellRepository
-                .findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, yesterday.plusDays(1)
-                        .atStartOfDay());
-        Sell lastSellOfToday = sellRepository
-                .findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, yesterday.plusDays(1)
-                        .atStartOfDay());
-
-        List<SumInDeRecord> sumInDeRecords = new ArrayList<>();
-
-        if (lastBuyOfYesterday != null) {
-            sumInDeRecords.add(new SumInDeRecord(lastBuyOfYesterday.getCreatedAt(), lastBuyOfYesterday.getPrice()));
-        }
-        if (lastBuyOfToday != null) {
-            sumInDeRecords.add(new SumInDeRecord(lastBuyOfToday.getCreatedAt(), lastBuyOfToday.getPrice()));
-        }
-        if (lastSellOfYesterday != null) {
-            sumInDeRecords.add(new SumInDeRecord(lastSellOfYesterday.getCreatedAt(), lastSellOfYesterday.getPrice()));
-        }
-        if (lastSellOfToday != null) {
-            sumInDeRecords.add(new SumInDeRecord(lastSellOfToday.getCreatedAt(), lastSellOfToday.getPrice()));
+        public DecreasePercentageCalculator(BuyRepository buyRepository, SellRepository sellRepository) {
+            super(buyRepository, sellRepository);
         }
 
-
-        sumInDeRecords.sort(Comparator.comparing(SumInDeRecord::getCreatedAt));
-
-        // 가장 빠른 거래와 가장 늦은 거래 선택
-        if (sumInDeRecords.size() < 2) {
-            return 0.0;
+        @Override
+        protected Double calculatePercentage(double firstPrice, double lastPrice) {
+            return (firstPrice - lastPrice) / firstPrice * 100;
         }
-        double firstPriceOfYesterday = sumInDeRecords.get(0).getPrice();
-        double lastPriceOfYesterday = sumInDeRecords.get(sumInDeRecords.size() - 1).getPrice();
-
-
-        if (firstPriceOfYesterday == 0) {
-            return 0.0;
-        }
-
-        return (firstPriceOfYesterday - lastPriceOfYesterday) / firstPriceOfYesterday * 100;
     }
 
     //거래량 top 10
@@ -169,14 +108,19 @@ public class RankingService {
                 .collect(Collectors.toList());
     }
 
+
+
     //상승율 top 10
     @Cacheable(value = "top10ByTradeIncrease")
     public List<RankingIncreaseDto> getTop10ByIncreasePercentage() {
+
         List<RankingIncreaseDto> result = new ArrayList<>();
         for (Stock stock : stockRepository.findAll()) {
-            result.add(new RankingIncreaseDto(stock.getCompany(), getIncreasePercentage(stock)));
+            result.add(new RankingIncreaseDto(stock.getCompany(), increasePercentageCalculator.getPercentage(stock)));
         }
-        return result.stream()
+
+        return stockRepository.findAll().stream()
+                .map(stock -> new RankingIncreaseDto(stock.getCompany(), increasePercentageCalculator.getPercentage(stock)))
                 .sorted(Comparator.comparing(RankingIncreaseDto::getIncreasePercentage).reversed())
                 .limit(10)
                 .collect(Collectors.toList());
@@ -185,11 +129,8 @@ public class RankingService {
     //하락율 top 10
     @Cacheable(value = "top10ByTradeDecrease")
     public List<RankingDecreaseDto> getTop10ByDecreasePercentage() {
-        List<RankingDecreaseDto> result = new ArrayList<>();
-        for (Stock stock : stockRepository.findAll()) {
-            result.add(new RankingDecreaseDto(stock.getCompany(), getDecreasePercentage(stock)));
-        }
-        return result.stream()
+        return stockRepository.findAll().stream()
+                .map(stock -> new RankingDecreaseDto(stock.getCompany(), decreasePercentageCalculator.getPercentage(stock)))
                 .sorted(Comparator.comparing(RankingDecreaseDto::getDecreasePercentage).reversed())
                 .limit(10)
                 .collect(Collectors.toList());
@@ -213,4 +154,62 @@ public class RankingService {
             return price;
         }
     }
+
+    public abstract class TradePercentageCalculator {
+
+        protected BuyRepository buyRepository;
+        protected SellRepository sellRepository;
+
+        public TradePercentageCalculator(BuyRepository buyRepository, SellRepository sellRepository) {
+            this.buyRepository = buyRepository;
+            this.sellRepository = sellRepository;
+        }
+
+        protected abstract Double calculatePercentage(double firstPrice, double lastPrice);
+
+        public Double getPercentage(Stock stock) {
+            // 오늘의 첫번째 Buy 거래와 마지막 Buy 거래 가져오기
+            Buy firstBuyOfToday = buyRepository.findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, today
+                    .atStartOfDay());
+            Buy lastBuyOfToday = buyRepository.findFirstByStockAndCreatedAtBeforeOrderByCreatedAtDesc(stock, today
+                    .plusDays(1).atStartOfDay());   //이 시간 전 최근 데이터 가져옴
+
+            // 오늘의 첫번째 Sell 거래와 마지막 Sell 거래 가져오기
+            Sell firstSellOfToday = sellRepository.findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, today
+                    .atStartOfDay());
+            Sell lastSellOfToday = sellRepository.findFirstByStockAndCreatedAtBeforeOrderByCreatedAtDesc(stock, today
+                    .plusDays(1).atStartOfDay());
+
+            List<SumInDeRecord> sumInDeRecords = new ArrayList<>();
+
+            if (firstBuyOfToday != null) {
+                sumInDeRecords.add(new SumInDeRecord(firstBuyOfToday.getCreatedAt(), firstBuyOfToday.getPrice()));
+            }
+            if (lastBuyOfToday != null) {
+                sumInDeRecords.add(new SumInDeRecord(lastBuyOfToday.getCreatedAt(), lastBuyOfToday.getPrice()));
+            }
+            if (firstSellOfToday != null) {
+                sumInDeRecords.add(new SumInDeRecord(firstSellOfToday.getCreatedAt(), firstSellOfToday.getPrice()));
+            }
+            if (lastSellOfToday != null) {
+                sumInDeRecords.add(new SumInDeRecord(lastSellOfToday.getCreatedAt(), lastSellOfToday.getPrice()));
+            }
+
+            sumInDeRecords.sort(Comparator.comparing(SumInDeRecord::getCreatedAt));
+
+            if (sumInDeRecords.size() < 2) {
+                return 0.0;
+            }
+
+            double firstPrice = sumInDeRecords.get(0).getPrice();
+            double lastPrice = sumInDeRecords.get(sumInDeRecords.size() - 1).getPrice();
+
+            if (firstPrice == 0) {
+                return 0.0;
+            }
+
+            return calculatePercentage(firstPrice, lastPrice);
+        }
+    }
+
 }
