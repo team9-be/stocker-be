@@ -74,4 +74,9 @@ public class UserController {
         userService.disabled(user);
         return new UserResponse("비활성화 되었습니다");
     }
+
+    @GetMapping("/test")
+    public String test(){
+        return "hello";
+    }
 }

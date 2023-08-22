@@ -5,6 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TradeGetDto {
+public class TradeUpdateRequestDto {
     private Long trade_id;
+    private Long quantity;
+    private Long price;
 }
