@@ -1,12 +1,18 @@
 package com.project.stocker.filter;
 
+import com.project.stocker.entity.UserRoleEnum;
 import com.project.stocker.jwt.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.sql.exec.internal.BaseExecutionContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.RedisConnectionFailureException;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -22,10 +28,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
+    private final RedisTemplate<String, String> redisTemplate;
 
-    public JwtAuthorizationFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService) {
+    public JwtAuthorizationFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService, RedisTemplate<String, String> redisTemplate) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
+        this.redisTemplate=redisTemplate;
     }
 
     @Override
@@ -34,15 +42,26 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String tokenValue = jwtUtil.getJwtFromHeader(req);
         if (StringUtils.hasText(tokenValue)) {
             if (!jwtUtil.validateToken(tokenValue)) {
-                log.error("Token Error");
-                return;
-            }
-            Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
-            try {
+                String refreshTokenFromHeader = jwtUtil.getRefreshTokenFromHeader(req);
+                String userEmail = jwtUtil.getUserEmailFromToken(refreshTokenFromHeader);
+                String tokenFromRedis = redisTemplate.opsForValue().get(userEmail);
+                tokenFromRedis = tokenFromRedis.substring(7);
+
+                if (StringUtils.hasText(tokenFromRedis) && jwtUtil.validateToken(tokenFromRedis)) {
+                    String username = jwtUtil.getUserInfoFromToken(tokenFromRedis).getSubject();
+                    String newAccessToken = jwtUtil.createToken(username, UserRoleEnum.USER);
+                    newAccessToken=newAccessToken.substring(7);
+                    res.setHeader("Authorization", newAccessToken);
+                    Claims info = jwtUtil.getUserInfoFromToken(newAccessToken);
+                    setAuthentication(info.getSubject());
+                } else {
+                    log.error("Invalid Refresh Token");
+                    return;
+                }
+            } else {
+                // 액세스 토큰이 유효한 경우
+                Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
                 setAuthentication(info.getSubject());
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                return;
             }
         }
         filterChain.doFilter(req, res);

@@ -9,6 +9,8 @@ import com.project.stocker.repository.BuyRepository;
 import com.project.stocker.repository.SellRepository;
 import com.project.stocker.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class RankingService {
 
@@ -27,6 +30,7 @@ public class RankingService {
     private final StockRepository stockRepository;
 
     // 거래량 산출
+    @Cacheable(value = "tradeVolume", key = "#stock.company")
     public Long getTradeVolumeForStock(Stock stock) {
         Long buyVolumeForStock = buyRepository.findByStock_Company(stock.getCompany())
                 .orElse(Collections.emptyList()) // 데이터가 없으면 빈 리스트 반환
@@ -40,10 +44,11 @@ public class RankingService {
                 .mapToLong(Sell::getQuantity)
                 .sum();
 
-        return buyVolumeForStock + sellVolumeForStock;
+        return (buyVolumeForStock + sellVolumeForStock);
     }
 
     // 상승율 산출
+    @Cacheable(value = "tradeIncrease", key = "#stock.company")
     public Double getIncreasePercentage(Stock stock) {
 
         List<Buy> buys = buyRepository.findTop2ByStockOrderByCreatedAtDesc(stock);
@@ -76,6 +81,7 @@ public class RankingService {
     }
 
     //하락율 산출
+    @Cacheable(value = "tradeDecrease", key = "#stock.company")
     public Double getDecreasePercentage(Stock stock) {
         List<Buy> buys = buyRepository.findTop2ByStockOrderByCreatedAtDesc(stock);
         List<Sell> sells = sellRepository.findTop2ByStockOrderByCreatedAtDesc(stock);
@@ -92,7 +98,6 @@ public class RankingService {
             sumInDeRecords.add(new SumInDeRecord(sell.getCreatedAt(), sell.getPrice()));
         }
 
-
         sumInDeRecords.sort(Comparator.comparing(SumInDeRecord::getCreatedAt).reversed());
 
         Double latestPrice = Double.valueOf(sumInDeRecords.get(0).getPrice());
@@ -102,8 +107,11 @@ public class RankingService {
     }
 
     //거래량 top 10
+    @Cacheable(value = "top10ByTradeVolume")
     public List<RankingVolumeDto> getTop10ByTradeVolume() {
+
         return stockRepository.findAll().stream()
+                .distinct()
                 .map(stock -> new RankingVolumeDto(stock.getCompany(), getTradeVolumeForStock(stock)))
                 .sorted(Comparator.comparing(RankingVolumeDto::getTradeVolume).reversed())
                 .limit(10)
@@ -111,12 +119,12 @@ public class RankingService {
     }
 
     //상승율 top 10
+    @Cacheable(value = "top10ByTradeIncrease")
     public List<RankingIncreaseDto> getTop10ByIncreasePercentage() {
         List<RankingIncreaseDto> result = new ArrayList<>();
         for (Stock stock : stockRepository.findAll()) {
             result.add(new RankingIncreaseDto(stock.getCompany(), getIncreasePercentage(stock)));
         }
-
         return result.stream()
                 .sorted(Comparator.comparing(RankingIncreaseDto::getIncreasePercentage).reversed())
                 .limit(10)
@@ -124,7 +132,8 @@ public class RankingService {
     }
 
     //하락율 top 10
-    public List<RankingDecreaseDto> getTop10ByDecreasePercetage() {
+    @Cacheable(value = "top10ByTradeDecrease")
+    public List<RankingDecreaseDto> getTop10ByDecreasePercentage() {
         List<RankingDecreaseDto> result = new ArrayList<>();
         for (Stock stock : stockRepository.findAll()) {
             result.add(new RankingDecreaseDto(stock.getCompany(), getDecreasePercentage(stock)));

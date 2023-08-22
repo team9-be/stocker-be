@@ -1,17 +1,17 @@
 package com.project.stocker.entity;
 
-import com.project.stocker.dto.request.StockDto;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Stock {
+@EqualsAndHashCode(of = "company")
+public class Stock{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -21,6 +21,7 @@ public class Stock {
 
     @Column(nullable = false)
     private String code;
+
 
     @Column(nullable = false)
     private String status;

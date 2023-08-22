@@ -8,19 +8,31 @@ import com.project.stocker.entity.UserRoleEnum;
 import com.project.stocker.jwt.JwtUtil;
 import com.project.stocker.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final RedisTemplate<String, String> redisTemplate;
+
+    long minute = 60 * 1000L;
+    long hour = 60 * minute;
+    private final long REFRESHTOKEN_TIME = hour;
+
+
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
@@ -55,7 +67,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public String login(LoginRequestDto requestDto) {
+    public String login(LoginRequestDto requestDto, HttpServletResponse res) {
         User user = userRepository.findByEmail(requestDto.getEmail()).orElseThrow(() ->
                 new IllegalArgumentException("등록되지 않은 이메일입니다"));
         if(!user.isStatus()){
@@ -65,8 +77,14 @@ public class UserService {
             throw new IllegalArgumentException("잘못된 비밀번호 입니다.");
         }
         String token = jwtUtil.createToken(user.getEmail(), user.getRole());
+        String refreshToken = jwtUtil.createRefreshToken(user.getEmail());
+        redisTemplate.opsForValue().set(refreshToken, user.getEmail());
+        redisTemplate.opsForValue().set(user.getEmail(), refreshToken, 24, TimeUnit.HOURS);
+        res.addHeader("RefreshToken", refreshToken);        //컨트롤러 단에서 해야함.
         return token;
     }
+
+
 
     public String logout(User user, HttpServletRequest req) {
         String token = jwtUtil.getJwtFromHeader(req);
