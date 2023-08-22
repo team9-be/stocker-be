@@ -42,6 +42,7 @@ public class TradeService {
         Trade trade = new Trade.Builder(quantity, buyPrice, stock)
 //                .buyer(user)
                 .build();
+        tradeRepository.save(trade);
 
         return new TradeCreateResponseDto(HttpStatus.OK.value(), "매수 신청 성공.");
     }
@@ -131,7 +132,6 @@ public class TradeService {
 
 
         // user validation
-
 
         tradeRepository.delete(trade);
 
