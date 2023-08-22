@@ -2,9 +2,9 @@ package com.project.stocker.service;
 
 import com.project.stocker.entity.Stock;
 import com.project.stocker.entity.User;
-import com.project.stocker.repository.BuyRepository;
-import com.project.stocker.repository.SellRepository;
+
 import com.project.stocker.repository.StockRepository;
+import com.project.stocker.repository.TradeRepository;
 import com.project.stocker.repository.UserRepository;
 import com.project.stocker.util.JsoupCrawling;
 import org.junit.jupiter.api.DisplayName;
@@ -28,9 +28,7 @@ class StockServiceTest {
     @Mock
     JsoupCrawling jsoupCrawling;
     @Mock
-    BuyRepository buyRepository;
-    @Mock
-    SellRepository sellRepository;
+    TradeRepository tradeRepository;
     @Mock
     UserRepository userRepository;
 
@@ -39,7 +37,7 @@ class StockServiceTest {
     void saveStockListSuccessTest() {
         // given
         List<Stock> stocks = new ArrayList<>();
-        StockService stockService = new StockService(stockRepository, jsoupCrawling, buyRepository, sellRepository, userRepository);
+        StockService stockService = new StockService(stockRepository, jsoupCrawling, tradeRepository, userRepository);
         given(jsoupCrawling.getStocks()).willReturn(stocks);
 
         // when
@@ -50,7 +48,7 @@ class StockServiceTest {
     @DisplayName("saveTradeList 성공 테스트")
     void saveTradeListSuccessTest() {
         // given
-        StockService stockService = new StockService(stockRepository, jsoupCrawling, buyRepository, sellRepository, userRepository);
+        StockService stockService = new StockService(stockRepository, jsoupCrawling, tradeRepository, userRepository);
         User user = new User();
         given(userRepository.findById(1L)).willReturn(Optional.of(user));
 
@@ -62,7 +60,7 @@ class StockServiceTest {
     @DisplayName("saveTradeList NoUser 실패 테스트")
     void saveTradeListNoUserTest() {
         // given
-        StockService stockService = new StockService(stockRepository, jsoupCrawling, buyRepository, sellRepository, userRepository);
+        StockService stockService = new StockService(stockRepository, jsoupCrawling, tradeRepository, userRepository);
 
         // when
         IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, stockService::saveTradeList);

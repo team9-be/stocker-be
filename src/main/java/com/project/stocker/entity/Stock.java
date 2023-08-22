@@ -27,10 +27,10 @@ public class Stock{
     private String status;
 
     @OneToMany(mappedBy = "stock")
-    private List<Buy> buys = new ArrayList<>();
+    private List<Trade> buys = new ArrayList<>();
 
     @OneToMany(mappedBy = "stock")
-    private List<Sell> sells = new ArrayList<>();
+    private List<Trade> sells = new ArrayList<>();
 
     public Stock(String company, String code) {
         this.company = company;
