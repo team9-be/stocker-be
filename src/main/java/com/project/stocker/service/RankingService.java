@@ -56,7 +56,7 @@ public class RankingService {
         return buyVolumeForStock;
     }
 
-    // 상승율 산출
+    // 상승율 계산기
     public class IncreasePercentageCalculator extends TradePercentageCalculator {
 
         public IncreasePercentageCalculator(TradeRepository tradeRepository) {
@@ -72,6 +72,7 @@ public class RankingService {
     }
 
 
+    // 하락율 계산기
     public class DecreasePercentageCalculator extends TradePercentageCalculator {
 
         public DecreasePercentageCalculator(TradeRepository tradeRepository) {
@@ -143,6 +144,7 @@ public class RankingService {
 
         protected abstract Double calculatePercentage(double firstPrice, double lastPrice);
 
+        // 퍼센트 가져오기
         public Double getPercentage(Stock stock) {
             // 오늘의 첫번째 Buy 거래와 마지막 Buy 거래 가져오기
             Trade firstBuyOfToday = tradeRepository.findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(stock, today
