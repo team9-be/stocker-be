@@ -47,9 +47,15 @@ public class JsoupCrawling {
     public List<TradeDto> getTrades(List<Stock> stocks) {
         List<TradeDto> trades = new ArrayList<>();
         for (Stock stock : stocks) {
+//            if(stock.getId()>10){
+//                break;
+//            }
+
             for (int i = 1; i < 41; i++) {
+
                 Connection conn = Jsoup.connect(TRADE_URL_BASE + "code=" + stock.getCode() + "&thistime=20230818162200&page=" + i);
                 int index = 0;
+
 
                 try {
                     Document document = conn.get();
