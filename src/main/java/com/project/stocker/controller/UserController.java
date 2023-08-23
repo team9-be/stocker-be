@@ -3,6 +3,7 @@ package com.project.stocker.controller;
 
 import com.project.stocker.dto.request.LoginRequestDto;
 import com.project.stocker.dto.request.SignupRequestDto;
+import com.project.stocker.dto.response.TokenDto;
 import com.project.stocker.dto.response.UserResponse;
 import com.project.stocker.entity.User;
 import com.project.stocker.entity.UserRoleEnum;
@@ -35,11 +36,12 @@ public class UserController {
 
     @PostMapping("/login")
     public UserResponse login(@RequestBody LoginRequestDto requestDto, HttpServletResponse res) {
-        String token = userService.login(requestDto, res);
+        TokenDto token = userService.login(requestDto);
         if(token.equals("해당 아이디가 비활성화 상태입니다.")){
             return new UserResponse("해당 아이디가 비활성화 상태입니다.");
         }
-        res.addHeader("Authorization", token);
+        res.addHeader("Authorization", token.getAccessToken());
+        res.addHeader("RefreshToken", token.getRefreshToken());
 
 
         return new UserResponse("로그인 되었습니다");
