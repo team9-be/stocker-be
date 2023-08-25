@@ -104,10 +104,10 @@ public class RankingService {
     @Cacheable(value = "top10ByTradeIncrease")
     public List<RankingIncreaseDto> getTop10ByIncreasePercentage() {
 
-        List<RankingIncreaseDto> result = new ArrayList<>();
-        for (Stock stock : stockRepository.findAll()) {
-            result.add(new RankingIncreaseDto(stock.getCompany(), increasePercentageCalculator.getPercentage(stock)));
-        }
+//        List<RankingIncreaseDto> result = new ArrayList<>();
+//        for (Stock stock : stockRepository.findAll()) {
+//            result.add(new RankingIncreaseDto(stock.getCompany(), increasePercentageCalculator.getPercentage(stock)));
+//        }
 
         return stockRepository.findAll().stream()
                 .map(stock -> new RankingIncreaseDto(stock.getCompany(), increasePercentageCalculator.getPercentage(stock)))
@@ -120,10 +120,10 @@ public class RankingService {
     @Cacheable(value = "top10ByTradeDecrease")
     public List<RankingDecreaseDto> getTop10ByDecreasePercentage() {
 
-        List<RankingDecreaseDto> result = new ArrayList<>();
-        for (Stock stock : stockRepository.findAll()) {
-            result.add(new RankingDecreaseDto(stock.getCompany(), decreasePercentageCalculator.getPercentage(stock)));
-        }
+//        List<RankingDecreaseDto> result = new ArrayList<>();
+//        for (Stock stock : stockRepository.findAll()) {
+//            result.add(new RankingDecreaseDto(stock.getCompany(), decreasePercentageCalculator.getPercentage(stock)));
+//        }
 
         return stockRepository.findAll().stream()
                 .map(stock -> new RankingDecreaseDto(stock.getCompany(), decreasePercentageCalculator.getPercentage(stock)))

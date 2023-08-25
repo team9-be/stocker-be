@@ -23,7 +23,7 @@ public class JsoupCrawling {
     public List<Stock> getStocks() {
         List<Stock> stocks = new ArrayList<>();
 
-        for (int i = 1; i < 41; i++) {
+        for (int i = 1; i < 2; i++) {
             Connection conn = Jsoup.connect(STOCK_URL_BASE + "&page=" + i);
 
             try {
