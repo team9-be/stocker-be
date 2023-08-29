@@ -1,6 +1,5 @@
 package com.project.stocker.util;
 
-import com.project.stocker.dto.request.TradeDto;
 import com.project.stocker.entity.Stock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
