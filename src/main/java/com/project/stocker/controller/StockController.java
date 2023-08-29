@@ -3,10 +3,8 @@ package com.project.stocker.controller;
 import com.project.stocker.dto.response.StockResponseDto;
 import com.project.stocker.service.StockService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,8 +24,12 @@ public class StockController {
     }
 
     @GetMapping("")
-    public StockResponseDto getStock(@RequestParam Long stockId){
-        StockResponseDto stockResponseDto = stockService.getStock(stockId);
-        return stockResponseDto;
+    public StockResponseDto getStock(@RequestParam Long stockId) {
+        return stockService.getStock(stockId);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> noTradeYesterday(Exception e) {
+        return ResponseEntity.ok(e.getMessage());
     }
 }

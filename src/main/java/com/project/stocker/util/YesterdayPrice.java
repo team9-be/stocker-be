@@ -13,25 +13,31 @@ import java.time.LocalDate;
 public class YesterdayPrice {
 
     private final TradeRepository tradeRepository;
+
     @Cacheable(value = "yesterdayLastPrice", key = "#stockId")
-    public Long getYesterdayLastPrice(Long stockId){
+    public Long getYesterdayLastPrice(Long stockId) {
         Trade lastTrade = tradeRepository
-                .findTop1ByStock_IdAndAndCreatedAtBeforeAndAndCreatedAtAfterOrderByCreatedAtDesc(
+                .findTop1ByStock_IdAndCreatedAtBeforeAndCreatedAtAfterOrderByCreatedAtDesc(
                         stockId,
-                        LocalDate.now().minusDays(1).atTime(23,59,59),
+                        LocalDate.now().minusDays(1).atTime(23, 59, 59),
                         LocalDate.now().minusDays(1).atStartOfDay()
                 );
+        if (lastTrade == null) {
+            return null;
+        }
         return lastTrade.getPrice();
     }
 
-    @Cacheable(value = "yesterdayFirstPrice", key = "#stockId")
-    public Long getYesterdayFirstPrice(Long stockId){
+    public Long getYesterdayFirstPrice(Long stockId) {
         Trade lastTrade = tradeRepository
-                .findTop1ByStock_IdAndAndCreatedAtBeforeAndAndCreatedAtAfterOrderByCreatedAtAsc(
+                .findTop1ByStock_IdAndCreatedAtBeforeAndCreatedAtAfterOrderByCreatedAtAsc(
                         stockId,
-                        LocalDate.now().minusDays(1).atTime(23,59,59),
+                        LocalDate.now().minusDays(1).atTime(23, 59, 59),
                         LocalDate.now().minusDays(1).atStartOfDay()
                 );
+        if (lastTrade == null) {
+            return null;
+        }
         return lastTrade.getPrice();
     }
 }

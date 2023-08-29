@@ -13,23 +13,32 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-
 import java.time.Duration;
+import java.util.HashMap;
 
 @Configuration
 @EnableCaching
 public class RedisConfig {
     @Bean
-    public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory){
+    public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-
                 .entryTtl(Duration.ofHours(1))
-
                 .disableCachingNullValues();
+
+        HashMap<String, RedisCacheConfiguration> cacheConfigurationsHashMap = new HashMap<>();
+        cacheConfigurationsHashMap.put("yesterdayLastPrice", RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofHours(24)));
+        cacheConfigurationsHashMap.put("top10ByTradeIncrease", RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofHours(24)));
+        cacheConfigurationsHashMap.put("top10ByTradeDecrease", RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofHours(24)));
+        cacheConfigurationsHashMap.put("top10ByTradeVolume", RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofHours(24)));
 
         return RedisCacheManager.builder()
                 .cacheWriter(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory))
                 .cacheDefaults(cacheConfiguration)
+                .withInitialCacheConfigurations(cacheConfigurationsHashMap)
                 .build();
     }
 
