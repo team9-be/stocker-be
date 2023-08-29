@@ -1,10 +1,8 @@
 package com.project.stocker.controller;
 
-import com.project.stocker.dto.request.ConfirmTradeRequestDto;
 import com.project.stocker.dto.request.TradeCreateRequestDto;
 import com.project.stocker.dto.request.TradeDeleteRequestDto;
 import com.project.stocker.dto.request.TradeUpdateRequestDto;
-import com.project.stocker.dto.response.ConfirmTradeResponseDto;
 import com.project.stocker.dto.response.TradeCreateResponseDto;
 import com.project.stocker.dto.response.TradeDeleteResponseDto;
 import com.project.stocker.dto.response.TradeUpdateResponseDto;
@@ -25,12 +23,6 @@ public class TradeController {
         return TradeService.buyOrders(buyCreateDto);
     }
 
-    //BUY CONFIRM
-    @PostMapping("/buy/confirm")
-    public ConfirmTradeResponseDto buyCreate(@RequestBody ConfirmTradeRequestDto buyCreateDto) {
-        return TradeService.buyConfirm(buyCreateDto);
-    }
-
     //BUY UPDATE
     @PutMapping("/buy")
     public TradeUpdateResponseDto buyUpdate(@RequestBody TradeUpdateRequestDto buyUpdateDto) {
@@ -49,12 +41,6 @@ public class TradeController {
         return TradeService.sellOrders(sellOrdersCreateDto);
     }
 
-    //SELL CONFIRM
-    @PostMapping("/sell/confirm")
-    public ConfirmTradeResponseDto confirmSell(@RequestBody ConfirmTradeRequestDto confirmTradeRequestDto) {
-        return TradeService.sellConfirm(confirmTradeRequestDto);
-    }
-
     //SELL UPDATE
     @PutMapping("/sell")
     public TradeUpdateResponseDto sellUpdate(@RequestBody TradeUpdateRequestDto sellUpdateDto) {
@@ -68,6 +54,4 @@ public class TradeController {
 
         return TradeService.sellDelete(sellDeleteDto);
     }
-
-
 }

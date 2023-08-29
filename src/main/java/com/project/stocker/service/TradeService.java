@@ -1,10 +1,8 @@
 package com.project.stocker.service;
 
-import com.project.stocker.dto.request.ConfirmTradeRequestDto;
 import com.project.stocker.dto.request.TradeCreateRequestDto;
 import com.project.stocker.dto.request.TradeDeleteRequestDto;
 import com.project.stocker.dto.request.TradeUpdateRequestDto;
-import com.project.stocker.dto.response.ConfirmTradeResponseDto;
 import com.project.stocker.dto.response.TradeCreateResponseDto;
 import com.project.stocker.dto.response.TradeDeleteResponseDto;
 import com.project.stocker.dto.response.TradeUpdateResponseDto;
@@ -61,6 +59,7 @@ public class TradeService {
                 .build();
 
         ordersRepository.save(trade);
+        matchOrders();
         return new TradeCreateResponseDto(HttpStatus.OK.value(), "매도 신청 성공.");
     }
 
@@ -99,28 +98,6 @@ public class TradeService {
         return new TradeDeleteResponseDto(HttpStatus.OK.value(), "매도 취소 성공.");
     }
 
-    //sell confirm publish
-    public ConfirmTradeResponseDto sellConfirm(ConfirmTradeRequestDto sellCreateDto) {
-        tradePublisher.publishSell(sellCreateDto);
-        return new ConfirmTradeResponseDto(HttpStatus.OK.value(), "매도 처리 중");
-    }
-
-    //sell confirm subscriber
-    public ConfirmTradeResponseDto subSellConfirm(ConfirmTradeRequestDto sellRequestDto) {
-        Long orderId = sellRequestDto.getTrade_id();
-
-        Orders orders = ordersRepository.findById(orderId).orElseThrow(() ->
-                new IllegalArgumentException("해당 매수 신청이 존재하지 않습니다."));
-
-        Trade trade = new Trade.Builder(orders.getQuantity(), orders.getPrice(), orders.getStock())
-                .seller(orders.getSeller())
-                .build();
-        trade.setStatus("confirm");
-        tradeRepository.save(trade);
-        ordersRepository.delete(orders);
-        return new ConfirmTradeResponseDto(HttpStatus.OK.value(), "매도 확정 성공.");
-    }
-
     //buy orders publish
     public TradeCreateResponseDto buyOrders(TradeCreateRequestDto ordersCreatRequestDto) {
         tradePublisher.publishBuyOrders(ordersCreatRequestDto);
@@ -134,7 +111,7 @@ public class TradeService {
         Long buyPrice = ordersCreateRequestDto.getPrice();
 
         User user2 = userRepository.findById(2L).orElseThrow(() ->
-                new IllegalArgumentException("id가 1인 유저가 존재하지 않습니다."));
+                new IllegalArgumentException("id가 2인 유저가 존재하지 않습니다."));
 
         Stock stock = (Stock) stockRepository.findByCompany(stockName).orElseThrow(() ->
                 new IllegalArgumentException("해당 종목이 존재하지 않습니다."));
@@ -144,8 +121,7 @@ public class TradeService {
                 .build();
 
         ordersRepository.save(trade);
-        log.info("매수 신청 성공");
-
+        matchOrders();
         return new TradeCreateResponseDto(HttpStatus.OK.value(), "매수 신청 성공.");
     }
 
@@ -184,37 +160,32 @@ public class TradeService {
         return new TradeDeleteResponseDto(HttpStatus.OK.value(), "매수 취소 성공.");
     }
 
-    //buy confirm publish
-    public ConfirmTradeResponseDto buyConfirm(ConfirmTradeRequestDto buyCreateDto) {
-        tradePublisher.publishBuy(buyCreateDto);
-        return new ConfirmTradeResponseDto(HttpStatus.OK.value(), "매수 처리 중");
-    }
+    //Matching function
+    private void matchOrders() {
+        List<Orders> allOrders = ordersRepository.findAll();
 
-    //buy confirm subscriber
-    public ConfirmTradeResponseDto subBuyConfirm(ConfirmTradeRequestDto buyRequestDto) {
-        Long orderId = buyRequestDto.getTrade_id();
-        String stockName = buyRequestDto.getStock();
-        Long quantity = buyRequestDto.getQuantity();
-        Long buyPrice = buyRequestDto.getPrice();
+        for (Orders buyOrder : allOrders) {
+            if (buyOrder.getBuyer() == null) continue;
 
-        List<Trade> matchingSells = tradeRepository
-                .findByStockCompanyAndPriceAndQuantityAndBuyerIsNullOrderByCreatedAtAsc
-                        (stockName, buyPrice, quantity);
+            for (Orders sellOrder : allOrders) {
+                if (sellOrder.getSeller() == null) continue;
 
-        Orders orders = ordersRepository.findById(orderId).orElseThrow(() ->
-                new IllegalArgumentException("해당 매수 신청이 존재하지 않습니다."));
+                if (buyOrder.getStock().equals(sellOrder.getStock()) &&
+                        buyOrder.getPrice().equals(sellOrder.getPrice()) &&
+                        buyOrder.getQuantity().equals(sellOrder.getQuantity())) {
 
-        if (!matchingSells.isEmpty()) {
-            Trade matchingTrade = matchingSells.get(0);
+                    Trade trade = new Trade.Builder(buyOrder.getQuantity(), buyOrder.getPrice(), buyOrder.getStock())
+                            .buyer(buyOrder.getBuyer())
+                            .seller(sellOrder.getSeller())
+                            .build();
+                    trade.setStatus("confirm");
+                    tradeRepository.save(trade);
 
-            matchingTrade.setBuyer(orders.getBuyer());
-            matchingTrade.setStatus("confirm");
-            tradeRepository.save(matchingTrade);
-
-            ordersRepository.delete(orders);
-            return new ConfirmTradeResponseDto(HttpStatus.OK.value(), "매수 확정 성공.");
-        } else {
-            throw new IllegalStateException("매칭되는 주문이 없습니다.");
+                    ordersRepository.delete(buyOrder);
+                    ordersRepository.delete(sellOrder);
+                    return;
+                }
+            }
         }
     }
 }

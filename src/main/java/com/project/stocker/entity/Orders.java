@@ -1,5 +1,6 @@
 package com.project.stocker.entity;
 
+import com.project.stocker.util.Auditing;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Orders {
+public class Orders extends Auditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
