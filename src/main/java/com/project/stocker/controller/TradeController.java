@@ -1,7 +1,10 @@
 package com.project.stocker.controller;
 
-import com.project.stocker.dto.request.*;
-import com.project.stocker.dto.response.ConfirmSellResponseDto;
+import com.project.stocker.dto.request.ConfirmTradeRequestDto;
+import com.project.stocker.dto.request.TradeCreateRequestDto;
+import com.project.stocker.dto.request.TradeDeleteRequestDto;
+import com.project.stocker.dto.request.TradeUpdateRequestDto;
+import com.project.stocker.dto.response.ConfirmTradeResponseDto;
 import com.project.stocker.dto.response.TradeCreateResponseDto;
 import com.project.stocker.dto.response.TradeDeleteResponseDto;
 import com.project.stocker.dto.response.TradeUpdateResponseDto;
@@ -18,46 +21,53 @@ public class TradeController {
 
     //BUY
     @PostMapping("/buy")
-    public TradeCreateResponseDto buyCreate(@RequestBody TradeCreateRequestDto buyCreateDto){
-        return TradeService.buyCreate(buyCreateDto);
+    public TradeCreateResponseDto buyCreate(@RequestBody TradeCreateRequestDto buyCreateDto) {
+        return TradeService.buyOrders(buyCreateDto);
     }
 
-
-    //기존 메서드와 속도 test용
-    @PostMapping("/buy1")
-    public TradeCreateResponseDto buyCreate1(@RequestBody TradeCreateRequestDto buyCreateDto){
-        return TradeService.sellCreate1(buyCreateDto);
+    //BUY CONFIRM
+    @PostMapping("/buy/confirm")
+    public ConfirmTradeResponseDto buyCreate(@RequestBody ConfirmTradeRequestDto buyCreateDto) {
+        return TradeService.buyConfirm(buyCreateDto);
     }
 
+    //BUY UPDATE
     @PutMapping("/buy")
-    public TradeUpdateResponseDto buyUpdate(@RequestBody TradeUpdateRequestDto buyUpdateDto){
-        return TradeService.sellUpdate(buyUpdateDto);
+    public TradeUpdateResponseDto buyUpdate(@RequestBody TradeUpdateRequestDto buyUpdateDto) {
+        return TradeService.buyUpdate(buyUpdateDto);
     }
 
+    //BUY DELETE
     @DeleteMapping("/buy")
-    public TradeDeleteResponseDto buyDelete(@RequestBody TradeDeleteRequestDto buyDeleteDto){
-        return TradeService.sellDelete(buyDeleteDto);
+    public TradeDeleteResponseDto buyDelete(@RequestBody TradeDeleteRequestDto buyDeleteDto) {
+        return TradeService.buyDelete(buyDeleteDto);
     }
 
     // SELL
     @PostMapping("/sell")
-    public TradeCreateResponseDto sellCreate(@RequestBody TradeCreateRequestDto sellCreateDto){
-        return TradeService.sellCreate(sellCreateDto);
+    public TradeCreateResponseDto sellCreate(@RequestBody TradeCreateRequestDto sellOrdersCreateDto) {
+        return TradeService.sellOrders(sellOrdersCreateDto);
     }
 
+    //SELL CONFIRM
     @PostMapping("/sell/confirm")
-    public ConfirmSellResponseDto confirmSell(@RequestBody ConfirmSellRequestDto confirmSellRequestDto){
-        return TradeService.confirmSell(confirmSellRequestDto);
+    public ConfirmTradeResponseDto confirmSell(@RequestBody ConfirmTradeRequestDto confirmTradeRequestDto) {
+        return TradeService.sellConfirmCreate(confirmTradeRequestDto);
     }
 
+    //SELL UPDATE
     @PutMapping("/sell")
-    public TradeUpdateResponseDto sellUpdate(@RequestBody TradeUpdateRequestDto sellUpdateDto){
+    public TradeUpdateResponseDto sellUpdate(@RequestBody TradeUpdateRequestDto sellUpdateDto) {
 
         return TradeService.sellUpdate(sellUpdateDto);
     }
+
+    //SELL DELETE
     @DeleteMapping("/sell")
-    public TradeDeleteResponseDto sellDelete(@RequestBody TradeDeleteRequestDto sellDeleteDto){
+    public TradeDeleteResponseDto sellDelete(@RequestBody TradeDeleteRequestDto sellDeleteDto) {
 
         return TradeService.sellDelete(sellDeleteDto);
     }
+
+
 }
