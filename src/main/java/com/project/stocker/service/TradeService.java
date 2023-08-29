@@ -100,7 +100,7 @@ public class TradeService {
     }
 
     //sell confirm publish
-    public ConfirmTradeResponseDto sellConfirmCreate(ConfirmTradeRequestDto sellCreateDto) {
+    public ConfirmTradeResponseDto sellConfirm(ConfirmTradeRequestDto sellCreateDto) {
         tradePublisher.publishSell(sellCreateDto);
         return new ConfirmTradeResponseDto(HttpStatus.OK.value(), "매도 처리 중");
     }

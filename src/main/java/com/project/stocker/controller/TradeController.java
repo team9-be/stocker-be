@@ -52,7 +52,7 @@ public class TradeController {
     //SELL CONFIRM
     @PostMapping("/sell/confirm")
     public ConfirmTradeResponseDto confirmSell(@RequestBody ConfirmTradeRequestDto confirmTradeRequestDto) {
-        return TradeService.sellConfirmCreate(confirmTradeRequestDto);
+        return TradeService.sellConfirm(confirmTradeRequestDto);
     }
 
     //SELL UPDATE
