@@ -9,9 +9,7 @@ import com.project.stocker.entity.UserRoleEnum;
 import com.project.stocker.jwt.JwtUtil;
 import com.project.stocker.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +18,6 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class UserService {
 
@@ -31,10 +28,10 @@ public class UserService {
 
     long minute = 60 * 1000L;
     long hour = 60 * minute;
-    private final long REFRESHTOKEN_TIME = hour;
 
 
     // ADMIN_TOKEN
+    // TODO: 추후에 환경변수로 변경
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
     public void signup(SignupRequestDto requestDto) {

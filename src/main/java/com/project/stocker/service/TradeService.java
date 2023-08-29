@@ -10,21 +10,17 @@ import com.project.stocker.entity.Stock;
 import com.project.stocker.entity.Trade;
 import com.project.stocker.repository.TradeRepository;
 import com.project.stocker.repository.StockRepository;
-import com.project.stocker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class TradeService {
     private final TradeRepository tradeRepository;
     private final StockRepository stockRepository;
-//    private final UserRepository userRepository;
 
 
     // BUY

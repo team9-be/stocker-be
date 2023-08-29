@@ -9,7 +9,6 @@ import com.project.stocker.repository.StockRepository;
 import jakarta.annotation.PostConstruct;
 import com.project.stocker.repository.TradeRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,6 @@ import java.util.stream.Collectors;
 
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class RankingService {
 
