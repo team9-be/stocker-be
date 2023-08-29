@@ -3,6 +3,7 @@ package com.project.stocker.service;
 
 import com.project.stocker.dto.request.LoginRequestDto;
 import com.project.stocker.dto.request.SignupRequestDto;
+import com.project.stocker.dto.response.TokenDto;
 import com.project.stocker.entity.User;
 import com.project.stocker.entity.UserRoleEnum;
 import com.project.stocker.jwt.JwtUtil;
@@ -67,21 +68,20 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public String login(LoginRequestDto requestDto, HttpServletResponse res) {
+    public TokenDto login(LoginRequestDto requestDto) {
         User user = userRepository.findByEmail(requestDto.getEmail()).orElseThrow(() ->
                 new IllegalArgumentException("등록되지 않은 이메일입니다"));
         if(!user.isStatus()){
-            return "해당 아이디가 비활성화 상태입니다.";
+            throw new IllegalArgumentException("해당 아이디가 비활성화 상태입니다.");
         }
         if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("잘못된 비밀번호 입니다.");
         }
-        String token = jwtUtil.createToken(user.getEmail(), user.getRole());
+        String accessToken = jwtUtil.createToken(user.getEmail(), user.getRole());
         String refreshToken = jwtUtil.createRefreshToken(user.getEmail());
         redisTemplate.opsForValue().set(refreshToken, user.getEmail());
         redisTemplate.opsForValue().set(user.getEmail(), refreshToken, 24, TimeUnit.HOURS);
-        res.addHeader("RefreshToken", refreshToken);        //컨트롤러 단에서 해야함.
-        return token;
+        return new TokenDto(accessToken, refreshToken);
     }
 
 

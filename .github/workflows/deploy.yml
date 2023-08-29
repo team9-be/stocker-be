@@ -7,9 +7,9 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
-  S3_BUCKET_NAME: sunwoo-bucket
-  CODE_DEPLOY_APPLICATION_NAME: stocker-codedeploy
-  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: stocker-codedeploy
+  S3_BUCKET_NAME: stocker-cicd-bucket
+  CODE_DEPLOY_APPLICATION_NAME: stocker_cicd
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: stocker_instance
 
 permissions:
   contents: read
