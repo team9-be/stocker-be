@@ -6,6 +6,7 @@ import com.project.stocker.dto.response.RankingVolumeDto;
 import com.project.stocker.service.RankingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,5 +38,9 @@ public class RankingController {
         return ResponseEntity.ok(result);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> noTradeYesterday(Exception e) {
+        return ResponseEntity.ok(e.getMessage());
+    }
 
 }
