@@ -26,8 +26,8 @@ public class StockController {
     }
 
     @GetMapping("")
-    public StockResponseDto getStock(@RequestParam Long stockId) {
-        return stockService.getStock(stockId);
+    public ResponseEntity<StockResponseDto> getStock(@RequestParam Long stockId) {
+        return ResponseEntity.ok(stockService.getStock(stockId));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

@@ -33,10 +33,10 @@ public class RedisConfig {
         RedisCacheConfiguration cacheConfiguration = createCacheConfiguration(Duration.ofHours(1));
 
         HashMap<String, RedisCacheConfiguration> cacheConfigurationsHashMap = new HashMap<>();
-        cacheConfigurationsHashMap.put("yesterdayLastPrice", createCacheConfiguration(Duration.ofHours(24)));
-        cacheConfigurationsHashMap.put("top10ByTradeIncrease", createCacheConfiguration(Duration.ofHours(24)));
-        cacheConfigurationsHashMap.put("top10ByTradeDecrease",createCacheConfiguration(Duration.ofHours(24)));
-        cacheConfigurationsHashMap.put("top10ByTradeVolume", createCacheConfiguration(Duration.ofHours(24)));
+        cacheConfigurationsHashMap.put("yesterdayLastPrice", createCacheConfiguration(Duration.ofMinutes(1435)));
+        cacheConfigurationsHashMap.put("top10ByTradeIncrease", createCacheConfiguration(Duration.ofMinutes(1435)));
+        cacheConfigurationsHashMap.put("top10ByTradeDecrease",createCacheConfiguration(Duration.ofMinutes(1435)));
+        cacheConfigurationsHashMap.put("top10ByTradeVolume", createCacheConfiguration(Duration.ofMinutes(1435)));
 
         return RedisCacheManager.builder()
                 .cacheWriter(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory))
