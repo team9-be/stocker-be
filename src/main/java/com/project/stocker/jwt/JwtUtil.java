@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,17 +30,14 @@ public class JwtUtil {
     // Token 식별자
     public static final String BEARER_PREFIX = "Bearer ";
     // 토큰 만료시간
-    private final RedisTemplate<String, String> redisTemplate;
     long sec = 1000L;       //테스트용
     long minute = 60 * 1000L;
     long hour = 60 * minute;
 
-    private final long REFRESHTOKEN_TIME = 10* minute;
+    private final long REFRESH_TOKEN_TIME = 10 * minute;
 
     private final long TOKEN_TIME = sec; // 10분
     
-
-    private final long LOGOUT_TIME = 0; // 60분
 
     @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
     private String secretKey;
@@ -60,7 +56,7 @@ public class JwtUtil {
         String refreshToken = BEARER_PREFIX+
                 Jwts.builder()
                 .setSubject(userEmail)
-                .setExpiration(new Date(date.getTime() + REFRESHTOKEN_TIME))
+                .setExpiration(new Date(date.getTime() + REFRESH_TOKEN_TIME))
                 .setIssuedAt(date)
                 .signWith(key, signatureAlgorithm)
                 .compact();
@@ -72,7 +68,7 @@ public class JwtUtil {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        } catch (SecurityException | MalformedJwtException | SignatureException e) {
+        } catch (SecurityException | MalformedJwtException e) {
             log.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
         } catch (ExpiredJwtException e) {
             log.error("Expired JWT token, 만료된 JWT token 입니다.");
@@ -99,8 +95,9 @@ public class JwtUtil {
     }
 
     public Authentication getAuthentication(String token) {
-        String userPrincipal = Jwts.parser()
-                .setSigningKey(secretKey)
+        String userPrincipal = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
                 .parseClaimsJws(token)
                 .getBody().getSubject();
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
@@ -144,7 +141,7 @@ public class JwtUtil {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        } catch (SecurityException | MalformedJwtException | SignatureException e) {
+        } catch (SecurityException | MalformedJwtException e) {
             log.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
         } catch (ExpiredJwtException e) {
             log.error("Expired JWT token, 만료된 JWT token 입니다.");
@@ -170,7 +167,7 @@ public class JwtUtil {
     }
 
     public long getRefreshTokenTime() {
-        return REFRESHTOKEN_TIME;
+        return REFRESH_TOKEN_TIME;
     }
 
     public String getUserEmailFromToken(String token) {
