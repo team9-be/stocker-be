@@ -19,21 +19,24 @@ import java.util.HashMap;
 @Configuration
 @EnableCaching
 public class RedisConfig {
+
+    private String host;
+    private int port;
+
+    public RedisConfig(@Value("${spring.data.redis.host}") String host, @Value("${spring.data.redis.port}") int port) {
+        this.host = host;
+        this.port = port;
+    }
+
     @Bean
     public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
-        RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofHours(1))
-                .disableCachingNullValues();
+        RedisCacheConfiguration cacheConfiguration = createCacheConfiguration(Duration.ofHours(1));
 
         HashMap<String, RedisCacheConfiguration> cacheConfigurationsHashMap = new HashMap<>();
-        cacheConfigurationsHashMap.put("yesterdayLastPrice", RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofHours(24)));
-        cacheConfigurationsHashMap.put("top10ByTradeIncrease", RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofHours(24)));
-        cacheConfigurationsHashMap.put("top10ByTradeDecrease", RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofHours(24)));
-        cacheConfigurationsHashMap.put("top10ByTradeVolume", RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofHours(24)));
+        cacheConfigurationsHashMap.put("yesterdayLastPrice", createCacheConfiguration(Duration.ofHours(24)));
+        cacheConfigurationsHashMap.put("top10ByTradeIncrease", createCacheConfiguration(Duration.ofHours(24)));
+        cacheConfigurationsHashMap.put("top10ByTradeDecrease",createCacheConfiguration(Duration.ofHours(24)));
+        cacheConfigurationsHashMap.put("top10ByTradeVolume", createCacheConfiguration(Duration.ofHours(24)));
 
         return RedisCacheManager.builder()
                 .cacheWriter(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory))
@@ -42,11 +45,11 @@ public class RedisConfig {
                 .build();
     }
 
-    @Value("${spring.data.redis.host}")
-    private String host;
-
-    @Value("${spring.data.redis.port}")
-    private int port;
+    private RedisCacheConfiguration createCacheConfiguration(Duration ttl){
+        return RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(ttl)
+                .disableCachingNullValues();
+    }
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {

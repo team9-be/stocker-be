@@ -14,13 +14,15 @@ public class StockController {
     private final StockService stockService;
 
     @GetMapping("/crawling")
-    public void getStock() {
+    public ResponseEntity<String> getStock() {
         stockService.saveStockList();
+        return ResponseEntity.ok("주식 종목 정보 크롤링이 완료 되었습니다.");
     }
 
     @GetMapping("/crawling/save")
-    public void getStockTrade() {
+    public ResponseEntity<String> getStockTrade() {
         stockService.saveTradeList();
+        return ResponseEntity.ok("주식 거래 정보 크롤링이 완료 되었습니다.");
     }
 
     @GetMapping("")
