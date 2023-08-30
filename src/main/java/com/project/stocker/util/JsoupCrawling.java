@@ -53,7 +53,7 @@ public class JsoupCrawling {
 
             for (int i = 1; i < 41; i++) {
 
-                Connection conn = Jsoup.connect(TRADE_URL_BASE + "code=" + stock.getCode() + "&thistime=20230818162200&page=" + i);
+                Connection conn = Jsoup.connect(TRADE_URL_BASE + "code=" + stock.getCode() + "&thistime=20230828162200&page=" + i);
                 int index = 0;
 
 
@@ -76,7 +76,7 @@ public class JsoupCrawling {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                if(index < 10)
+                if (index < 10)
                     break;
             }
         }
