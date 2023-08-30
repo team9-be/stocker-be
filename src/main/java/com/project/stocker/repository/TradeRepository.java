@@ -8,8 +8,12 @@ import java.util.List;
 
 public interface TradeRepository extends JpaRepository<Trade, Long> {
 
-    Optional<List<Trade>> findByStockCompany(String company);
-    Trade findFirstByStockAndCreatedAtAfterOrderByCreatedAtAsc(Stock stock, LocalDateTime localDateTime);
-    Trade findFirstByStockAndCreatedAtBeforeOrderByCreatedAtDesc(Stock stock, LocalDateTime localDateTime);
+    List<Trade> findByStock_IdAndCreatedAtBeforeAndCreatedAtAfter(Long stockId, LocalDateTime endTime, LocalDateTime startTime);
+
+    Trade findTop1ByStock_IdAndBuyerIsNotNullAndSellerIsNotNullOrderByCreatedAtDesc(Long stockId);
+
+    Trade findTop1ByStock_IdAndCreatedAtBeforeAndCreatedAtAfterOrderByCreatedAtDesc(Long stockId, LocalDateTime yesterdayLast, LocalDateTime yesterdayFirst);
+
+    Trade findTop1ByStock_IdAndCreatedAtBeforeAndCreatedAtAfterOrderByCreatedAtAsc(Long stockId, LocalDateTime localDateTime, LocalDateTime localDateTime1);
 
 }
