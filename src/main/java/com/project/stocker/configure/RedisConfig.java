@@ -30,13 +30,13 @@ public class RedisConfig {
 
     @Bean
     public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
-        RedisCacheConfiguration cacheConfiguration = createCacheConfiguration(Duration.ofHours(1));
+        RedisCacheConfiguration cacheConfiguration = createCacheConfiguration(Duration.ofHours(1)).disableCachingNullValues();
 
         HashMap<String, RedisCacheConfiguration> cacheConfigurationsHashMap = new HashMap<>();
-        cacheConfigurationsHashMap.put("yesterdayLastPrice", createCacheConfiguration(Duration.ofMinutes(1435)));
-        cacheConfigurationsHashMap.put("top10ByTradeIncrease", createCacheConfiguration(Duration.ofMinutes(1435)));
-        cacheConfigurationsHashMap.put("top10ByTradeDecrease",createCacheConfiguration(Duration.ofMinutes(1435)));
-        cacheConfigurationsHashMap.put("top10ByTradeVolume", createCacheConfiguration(Duration.ofMinutes(1435)));
+        cacheConfigurationsHashMap.put("yesterdayLastPrice", createCacheConfiguration(Duration.ofMinutes(1437)));
+        cacheConfigurationsHashMap.put("top10ByTradeIncrease", createCacheConfiguration(Duration.ofMinutes(1437)));
+        cacheConfigurationsHashMap.put("top10ByTradeDecrease",createCacheConfiguration(Duration.ofMinutes(1437)));
+        cacheConfigurationsHashMap.put("top10ByTradeVolume", createCacheConfiguration(Duration.ofMinutes(1437)));
 
         return RedisCacheManager.builder()
                 .cacheWriter(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory))
@@ -47,8 +47,7 @@ public class RedisConfig {
 
     private RedisCacheConfiguration createCacheConfiguration(Duration ttl){
         return RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(ttl)
-                .disableCachingNullValues();
+                .entryTtl(ttl);
     }
 
     @Bean
