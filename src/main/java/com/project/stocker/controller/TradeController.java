@@ -6,9 +6,11 @@ import com.project.stocker.dto.request.TradeUpdateRequestDto;
 import com.project.stocker.dto.response.TradeCreateResponseDto;
 import com.project.stocker.dto.response.TradeDeleteResponseDto;
 import com.project.stocker.dto.response.TradeUpdateResponseDto;
+import com.project.stocker.filter.UserDetailsImpl;
 import com.project.stocker.service.TradeService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,8 +40,11 @@ public class TradeController {
 
     // SELL
     @PostMapping("/sell")
-    public TradeCreateResponseDto sellCreate(@RequestBody TradeCreateRequestDto sellOrdersCreateDto, HttpServletRequest request) {
-        return TradeService.sellOrders(sellOrdersCreateDto,request);
+    public TradeCreateResponseDto sellCreate(@RequestBody TradeCreateRequestDto sellOrdersCreateDto,
+                                             HttpServletRequest request,
+                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getUser().getId();
+        return TradeService.sellOrders(sellOrdersCreateDto,request, userId);
     }
 
     //SELL UPDATE
