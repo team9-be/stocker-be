@@ -18,7 +18,6 @@ public class User extends Auditing {
     private Long id;
 
     private String username;
-
     @Column(nullable = false)
     private String password;
 

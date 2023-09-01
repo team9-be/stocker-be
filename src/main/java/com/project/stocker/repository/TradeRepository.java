@@ -15,5 +15,4 @@ public interface TradeRepository extends JpaRepository<Trade, Long> {
     Trade findTop1ByStock_IdAndCreatedAtBeforeAndCreatedAtAfterOrderByCreatedAtDesc(Long stockId, LocalDateTime yesterdayLast, LocalDateTime yesterdayFirst);
 
     Trade findTop1ByStock_IdAndCreatedAtBeforeAndCreatedAtAfterOrderByCreatedAtAsc(Long stockId, LocalDateTime localDateTime, LocalDateTime localDateTime1);
-
 }
