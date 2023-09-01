@@ -7,6 +7,7 @@ import com.project.stocker.dto.response.TradeCreateResponseDto;
 import com.project.stocker.dto.response.TradeDeleteResponseDto;
 import com.project.stocker.dto.response.TradeUpdateResponseDto;
 import com.project.stocker.service.TradeService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,39 +20,38 @@ public class TradeController {
 
     //BUY
     @PostMapping("/buy")
-    public TradeCreateResponseDto buyCreate(@RequestBody TradeCreateRequestDto buyCreateDto) {
-        return TradeService.buyOrders(buyCreateDto);
+    public TradeCreateResponseDto buyCreate(@RequestBody TradeCreateRequestDto buyCreateDto, HttpServletRequest request) {
+        return TradeService.buyOrders(buyCreateDto,request);
     }
 
     //BUY UPDATE
     @PutMapping("/buy")
-    public TradeUpdateResponseDto buyUpdate(@RequestBody TradeUpdateRequestDto buyUpdateDto) {
-        return TradeService.buyUpdate(buyUpdateDto);
+    public TradeUpdateResponseDto buyUpdate(@RequestBody TradeUpdateRequestDto buyUpdateDto, HttpServletRequest request) {
+        return TradeService.buyUpdate(buyUpdateDto, request);
     }
 
     //BUY DELETE
     @DeleteMapping("/buy")
-    public TradeDeleteResponseDto buyDelete(@RequestBody TradeDeleteRequestDto buyDeleteDto) {
-        return TradeService.buyDelete(buyDeleteDto);
+    public TradeDeleteResponseDto buyDelete(@RequestBody TradeDeleteRequestDto buyDeleteDto, HttpServletRequest request) {
+        return TradeService.buyDelete(buyDeleteDto, request);
     }
 
     // SELL
     @PostMapping("/sell")
-    public TradeCreateResponseDto sellCreate(@RequestBody TradeCreateRequestDto sellOrdersCreateDto) {
-        return TradeService.sellOrders(sellOrdersCreateDto);
+    public TradeCreateResponseDto sellCreate(@RequestBody TradeCreateRequestDto sellOrdersCreateDto, HttpServletRequest request) {
+        return TradeService.sellOrders(sellOrdersCreateDto,request);
     }
 
     //SELL UPDATE
     @PutMapping("/sell")
-    public TradeUpdateResponseDto sellUpdate(@RequestBody TradeUpdateRequestDto sellUpdateDto) {
+    public TradeUpdateResponseDto sellUpdate(@RequestBody TradeUpdateRequestDto sellUpdateDto, HttpServletRequest request) {
 
-        return TradeService.sellUpdate(sellUpdateDto);
+        return TradeService.sellUpdate(sellUpdateDto, request);
     }
 
     //SELL DELETE
     @DeleteMapping("/sell")
-    public TradeDeleteResponseDto sellDelete(@RequestBody TradeDeleteRequestDto sellDeleteDto) {
-
-        return TradeService.sellDelete(sellDeleteDto);
+    public TradeDeleteResponseDto sellDelete(@RequestBody TradeDeleteRequestDto sellDeleteDto, HttpServletRequest request) {
+        return TradeService.sellDelete(sellDeleteDto, request);
     }
 }
