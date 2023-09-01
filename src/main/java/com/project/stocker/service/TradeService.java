@@ -29,19 +29,25 @@ public class TradeService {
     private final OrdersRepository ordersRepository;
     private final AccountRepository accountRepository;
     private final JwtUtil jwtUtil;
+    private final AccountService accountService;
 
     @Autowired
     private TradePublisher tradePublisher;
 
     //sell order publish
-    public TradeCreateResponseDto sellOrders(TradeCreateRequestDto ordersCreatRequestDto, HttpServletRequest request) {
+    public TradeCreateResponseDto sellOrders(TradeCreateRequestDto ordersCreatRequestDto, HttpServletRequest request,
+                                             Long userId) {
         String token = jwtUtil.getJwtFromRequest(request);
         ordersCreatRequestDto.setToken(token);
         tradePublisher.publishSellOrders(ordersCreatRequestDto);
-
+        ordersCreatRequestDto.getStock();
+        Account account = accountRepository.findByUserIdAndStockCompany(userId, ordersCreatRequestDto.getStock()).orElseThrow(() ->
+                new IllegalArgumentException("해당 계좌를 찾을 수 없습니다."));
+        if(ordersCreatRequestDto.getQuantity() > account.getQuantity()){
+            throw new IllegalArgumentException("보유중인 주식이 부족합니다.");
+        }
         return new TradeCreateResponseDto(HttpStatus.OK.value(), "매도 주문 처리 중");
     }
-
 
 
     //sell order subscriber
@@ -128,7 +134,6 @@ public class TradeService {
         String token = jwtUtil.getJwtFromRequest(request);
         ordersCreatRequestDto.setToken(token);
         tradePublisher.publishBuyOrders(ordersCreatRequestDto);
-
         return new TradeCreateResponseDto(HttpStatus.OK.value(), "매수 주문 처리 중");
     }
 
@@ -212,6 +217,7 @@ public class TradeService {
     }
 
     //Matching function
+    //Matching 시점에 my account insert
     @Transactional
     public void matchOrders() {
         List<Orders> allOrders = ordersRepository.findAll();
@@ -232,12 +238,27 @@ public class TradeService {
                             .build();
                     trade.setStatus("confirm");
                     tradeRepository.save(trade);
-                    Long buyerId = trade.getBuyer().getId();
-                    Long sellerId = trade.getSeller().getId();
-                    Account account = accountRepository.findByUserIdAndStockCompany(buyerId, trade.getStock().getCompany()).get();
-                    Account account2 = accountRepository.findByUserIdAndStockCompany(sellerId, trade.getStock().getCompany()).get();
-                    account.changeQuantity(trade.getQuantity());
-                    account2.changeQuantity(-trade.getQuantity());
+                    // myAccount
+                    if (accountRepository.findByUserIdAndStockCompany(buyOrder.getBuyer().getId(), trade.getStock()
+                            .getCompany()).isPresent()) {
+                        Account account = accountRepository.findByUserIdAndStockCompany(buyOrder.getBuyer().getId(),
+                                trade.getStock().getCompany()).get();
+                        account.changeQuantity(trade.getQuantity());
+                    } else {
+                        Account account = new Account(
+                                userRepository.findById(buyOrder.getBuyer().getId()).get(), trade);
+                        accountRepository.save(account);
+                    }
+                    if (accountRepository.findByUserIdAndStockCompany(sellOrder.getSeller().getId(), trade.getStock()
+                            .getCompany()).isPresent()) {
+                        Account account2 = accountRepository.findByUserIdAndStockCompany(sellOrder.getSeller().getId(),
+                                trade.getStock().getCompany()).get();
+                        account2.changeQuantity(-trade.getQuantity());
+                    }else {
+                        Account account = new Account(
+                                userRepository.findById(sellOrder.getSeller().getId()).get(), trade);
+                        accountRepository.save(account);
+                    }
                     ordersRepository.delete(buyOrder);
                     ordersRepository.delete(sellOrder);
                     return;

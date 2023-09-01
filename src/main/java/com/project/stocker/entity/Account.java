@@ -18,19 +18,17 @@ public class Account {
     private Long quantity = 0L;
     private Long price;
     private Long totalAsset = 0L;
-    public Account(User user) {
-        this.user = user;
-    }
+
     public Account(User user, Trade trade) {
         this.user = user;
         this.stockCompany = trade.getStock().getCompany();
         this.quantity = trade.getQuantity();
         this.price = trade.getPrice();
-
+        this.totalAsset = this.price * this.quantity;
 
     }
 
-    public void update(Trade trade) {
+    public void renewal(Trade trade) {
         this.stockCompany = trade.getStock().getCompany();
         this.quantity = trade.getQuantity();
         this.price = trade.getPrice();
@@ -38,5 +36,6 @@ public class Account {
     }
     public void changeQuantity(Long quantity) {
         this.quantity += quantity;
+        this.totalAsset = this.price * this.quantity;
     }
 }
