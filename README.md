@@ -6,18 +6,21 @@
 
 ## 📚Team Jira 보러가기
 
-[Jira](https://dojunkim.atlassian.net/wiki/spaces/hanghaefin/overview?homepageId=131587)
+[Jira 보러가기](https://dojunkim.atlassian.net/wiki/spaces/hanghaefin/overview?homepageId=131587)
 
 
 
-## ✨Team Brochure 보러가기✨
+## ✨Team Brochure 보러가기
 
-[Brochure](https://misty-composer-643.notion.site/NETicket-2b06067c2b2448faa71951f43f225a0a)
+// TODO : CHANGE LINK
+[Brochure 보러가기](https://misty-composer-643.notion.site/NETicket-2b06067c2b2448faa71951f43f225a0a)
 <br>
 
 
 
 # 💁🏻‍♂️프로젝트 소개
+
+// TODO: FIX CONTENT?
 
 ```jsx
 🔍 안정성과 성능
@@ -62,24 +65,27 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 
 ### 📌 Redis Cache를 사용한 빠른 랭킹 조회
 
-이곳을 Gif파일로 꾸민 조가 있음.
+// TODO: CREATE GIF FILE OR IMAGE 
 
 - 
 
 ### 📌 Redis의 Pub/Sub을 이용한 매매 시스템 구현
 
+// TODO: CREATE GIF FILE OR IMAGE 
 
 
 - 
 
 ### 📌 DB 인덱싱으로 매매한 종목을 내 계좌 저장 및 조회
 
+// TODO: CREATE GIF FILE OR IMAGE 
 
 
 - 
 
 ### 📌 Spring Security를 이용한 유저 시스템
 
+// TODO: CREATE GIF FILE OR IMAGE, DELETE ENTIRELY?
 
 
 - 
@@ -90,6 +96,8 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 ---
 
 # 🎀프로젝트 챌린지 포인트
+
+// TODO : FIX CONTENT
 
 <details>
 <summary>📈 사용자의 원활하고 끊김 없는 서비스 제공 위한 높은 TPS와 빠른 응답속도</summary>
@@ -112,6 +120,7 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 </div>
 </details>    
 
+// TODO : FIX CONTENT
 <details>
 <summary>🕸 데이터의 정확성과 일관성을 보장해, 데이터 무결성 확보</summary>
 <div markdown="1">
@@ -132,6 +141,8 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 </div>
 </details>    
 
+
+// TODO : FIX CONTENT
 <details>
 <summary>📊 APM을 활용해서 시스템의 성능과 안정성을 지속적으로 관리</summary>
 <div markdown="1">
@@ -188,11 +199,14 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 
 📚 **Tech Stack**
 
-<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=springboot&logoColor=white"/>  <img src="https://img.shields.io/badge/Spring JPA-6DB33F?style=flat&logo=&logoColor=white"/>  <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=springsecurity&logoColor=white"/>
-<img src="https://img.shields.io/badge/JAVA-6DB33F?style=flat&logo=&logoColor=white"/>
+
+<img src="https://img.shields.io/badge/JAVA 17-6DB33F?style=flat&logo=&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=springboot&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring JPA-6DB33F?style=flat&logo=&logoColor=white"/>  
 <img src="https://img.shields.io/badge/JWT-6DB33F?style=flat&logo=&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=springsecurity&logoColor=white"/>
 <img src="https://img.shields.io/badge/Redis Cache-DC382D?style=flat&logo=redis&logoColor=white"/>
-<img src="https://img.shields.io/badge/QueryDSL-7957D5?style=flat&logo=&logoColor=white"/>
+<!-- <img src="https://img.shields.io/badge/QueryDSL-7957D5?style=flat&logo=&logoColor=white"/> -->
 
 🔩 **DB**
 
@@ -200,23 +214,29 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 
 
 
-🗜 **DevOps**
+🗜 **Cloud**
 
-<img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/>  <img src="https://img.shields.io/badge/AWS S3-FF9900?style=flat&logo=amazons3&logoColor=white"/>  
-<img src="https://img.shields.io/badge/AWS Application Load Balancer-6DB33F?style=flat&logo=&logoColor=white"/>  <img src="https://img.shields.io/badge/AWS Auto Scaling-FF9900?style=flat&logo=&logoColor=white"/>  
-<img src="https://img.shields.io/badge/AWS Code Delploy-6DB33F?style=flat&logo=&logoColor=white"/>  <img src="https://img.shields.io/badge/GitHub Actions-F05032?style=flat&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white"/>  
+<img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/>
+<img src="https://img.shields.io/badge/AWS S3-FF9900?style=flat&logo=amazons3&logoColor=white"/>  
+<img src="https://img.shields.io/badge/AWS Elastic Load Balancer-6DB33F?style=flat&logo=&logoColor=white"/>  
 
+💻 **Deployment**
+<img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white"/> 
+<img src="https://img.shields.io/badge/AWS Code Delploy-6DB33F?style=flat&logo=&logoColor=white"/>  
+<img src="https://img.shields.io/badge/GitHub Actions-F05032?style=flat&logo=&logoColor=white"/> 
 
 
 ⚖ **Test**
 
-<img src="https://img.shields.io/badge/Junit5-25A162?style=flat&logo=junit5&logoColor=white"/>  <img src="https://img.shields.io/badge/Mockito-6DB33F?style=flat&logo=&logoColor=white"/>  <img src="https://img.shields.io/badge/Jmeter-D22128?style=flat&logo=apachejmeter&logoColor=white"/>  <img src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white"/>  
+<img src="https://img.shields.io/badge/Junit5-25A162?style=flat&logo=junit5&logoColor=white"/>  <img src="https://img.shields.io/badge/Mockito-6DB33F?style=flat&logo=&logoColor=white"/>  <img src="https://img.shields.io/badge/Jmeter-D22128?style=flat&logo=apachejmeter&logoColor=white"/>  
+<img src="https://img.shields.io/badge/Ngrinder-7957D5?style=flat&logo=&logoColor=white"/>
+<img src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white"/>  
 
 
 
 🖥 **Monitoring**
 
-<img src="https://img.shields.io/badge/AWS CloudWatch-FF4F8B?style=flat&logo=amazoncloudwatch&logoColor=white"/>  <img src="https://img.shields.io/badge/Grafana-F46800?style=flat&logo=grafana&logoColor=white"/>   ![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=flat&logo=Prometheus&logoColor=white)
+<img src="https://img.shields.io/badge/AWS CloudWatch-FF4F8B?style=flat&logo=amazoncloudwatch&logoColor=white"/>  <img src="https://img.shields.io/badge/Grafana-F46800?style=flat&logo=grafana&logoColor=white"/>  <img src="img.shields.io/badge/Prometheus-E6522C?style=flat&logo=Prometheus&logoColor=white">
 
 
 
@@ -232,6 +252,8 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 
 ## 💾 ERD
 
+// TODO: ADD IMAGE SRC
+
 ![img](blob:https://dojunkim.atlassian.net/b1630fb7-9487-436a-b7c8-edc95c3ee165#media-blob-url=true&id=e40f92c0-7b27-4950-abfc-e9a7bbca6b7d&collection=contentId-33270&contextId=33270&height=600&width=1227&alt=)
 
 
@@ -244,6 +266,9 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 
 ### 🌟 매매 서비스 로직에서 데이터 무결성을 지키며 응답속도와 TPS 개선 🌟
 
+
+// TODO: FIX CONTENT
+
 <aside>
 💡 챌린지 포인트로 설정한 목표를 달성하기 위해<br>
 예매 서비스 로직에서 ‘남은 좌석 수’의 데이터 무결성을 지켜야 하고,<br>
@@ -251,6 +276,8 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 </aside>
 
 <br><br>
+
+// TODO : FIX CONTENT AND LINKS
 
 [1. 트랜잭션 충돌 문제를 비관적 락으로 해결](https://misty-composer-643.notion.site/1-2ace0d67e5be4082a3fc3153de662e73)<br>
 [2. 비관적 락 적용 시 속도 문제를 Redis Cache로 해결](https://misty-composer-643.notion.site/2-Redis-Cache-58069ce89a91466d94fe7d1d7ca0812b)<br>
@@ -262,6 +289,7 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 
 ### 🌟 조회 서비스 로직에서 Redis cache 응답속도와 TPS 개선  🌟
 
+// TODO: CREATE GIF FILE OR IMAGE 
 
 
 
@@ -271,6 +299,8 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 # 🚀 성능 개선
 
 <aside>
+// TODO : CHANGE CONTENT
+
 🛠 저희는 트러블 슈팅의 각 단계에서 성능이 어느 정도까지 개선되었는지 알아보기 위해,<br>
 프로젝트 내내 Apache Jmeter를 통해 부하테스트를 진행했습니다.<br>
 평균 응답 속도(ms)와 처리량(TPS, Transacion Per Second)을 위주로 정리해 두었습니다.<br>
