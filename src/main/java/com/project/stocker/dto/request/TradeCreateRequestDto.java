@@ -9,5 +9,5 @@ public class TradeCreateRequestDto {
     private String stock;
     private Long quantity;
     private Long price;
-
+    private String token;
 }

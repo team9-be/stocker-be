@@ -34,9 +34,9 @@ public class JwtUtil {
     long minute = 60 * 1000L;
     long hour = 60 * minute;
 
-    private final long REFRESH_TOKEN_TIME = 10 * minute;
+    private final long REFRESH_TOKEN_TIME = 60 * minute;
 
-    private final long TOKEN_TIME = sec; // 10분
+    private final long TOKEN_TIME = 10*minute; // 10분
     
 
     @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
