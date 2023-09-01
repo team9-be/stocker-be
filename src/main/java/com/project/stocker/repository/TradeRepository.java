@@ -21,6 +21,7 @@ public interface TradeRepository extends JpaRepository<Trade, Long> {
     Trade findTop1ByStock_IdAndBuyerIsNotNullAndSellerIsNotNullOrderByCreatedAtDesc(Long stockId);
 
 
+
     Trade findTop1ByStock_IdAndCreatedAtBeforeAndCreatedAtAfterOrderByCreatedAtDesc(
             Long stockId,
             LocalDateTime yesterdayLast,

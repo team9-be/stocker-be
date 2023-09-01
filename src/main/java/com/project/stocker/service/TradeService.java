@@ -6,14 +6,9 @@ import com.project.stocker.dto.request.TradeUpdateRequestDto;
 import com.project.stocker.dto.response.TradeCreateResponseDto;
 import com.project.stocker.dto.response.TradeDeleteResponseDto;
 import com.project.stocker.dto.response.TradeUpdateResponseDto;
-import com.project.stocker.entity.Orders;
-import com.project.stocker.entity.Stock;
-import com.project.stocker.entity.Trade;
-import com.project.stocker.entity.User;
-import com.project.stocker.repository.OrdersRepository;
-import com.project.stocker.repository.StockRepository;
-import com.project.stocker.repository.TradeRepository;
-import com.project.stocker.repository.UserRepository;
+import com.project.stocker.entity.*;
+import com.project.stocker.repository.*;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +26,7 @@ public class TradeService {
     private final StockRepository stockRepository;
     private final UserRepository userRepository;
     private final OrdersRepository ordersRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
     private TradePublisher tradePublisher;
@@ -98,6 +94,7 @@ public class TradeService {
     }
 
     //buy orders publish
+
     public TradeCreateResponseDto buyOrders(TradeCreateRequestDto ordersCreateRequestDto) {
         tradePublisher.publishBuyOrders(ordersCreateRequestDto);
         return new TradeCreateResponseDto(HttpStatus.OK.value(), "매수 주문 처리 중");
@@ -160,7 +157,8 @@ public class TradeService {
     }
 
     //Matching function
-    private void matchOrders() {
+    @Transactional
+    public void matchOrders() {
         List<Orders> allOrders = ordersRepository.findAll();
 
         for (Orders buyOrder : allOrders) {
@@ -179,7 +177,12 @@ public class TradeService {
                             .build();
                     trade.setStatus("confirm");
                     tradeRepository.save(trade);
-
+                    Long buyerId = trade.getBuyer().getId();
+                    Long sellerId = trade.getSeller().getId();
+                    Account account = accountRepository.findByUserIdAndStockCompany(buyerId, trade.getStock().getCompany()).get();
+                    Account account2 = accountRepository.findByUserIdAndStockCompany(sellerId, trade.getStock().getCompany()).get();
+                    account.changeQuantity(trade.getQuantity());
+                    account2.changeQuantity(-trade.getQuantity());
                     ordersRepository.delete(buyOrder);
                     ordersRepository.delete(sellOrder);
                     return;
