@@ -32,8 +32,8 @@ public class TradeService {
     private TradePublisher tradePublisher;
 
     //sell order publish
-    public TradeCreateResponseDto sellOrders(TradeCreateRequestDto ordersCreatRequestDto) {
-        tradePublisher.publishSellOrders(ordersCreatRequestDto);
+    public TradeCreateResponseDto sellOrders(TradeCreateRequestDto ordersCreateRequestDto) {
+        tradePublisher.publishSellOrders(ordersCreateRequestDto);
         return new TradeCreateResponseDto(HttpStatus.OK.value(), "매도 주문 처리 중");
     }
 
@@ -94,9 +94,9 @@ public class TradeService {
     }
 
     //buy orders publish
-    @Transactional
-    public TradeCreateResponseDto buyOrders(TradeCreateRequestDto ordersCreatRequestDto) {
-        tradePublisher.publishBuyOrders(ordersCreatRequestDto);
+
+    public TradeCreateResponseDto buyOrders(TradeCreateRequestDto ordersCreateRequestDto) {
+        tradePublisher.publishBuyOrders(ordersCreateRequestDto);
         return new TradeCreateResponseDto(HttpStatus.OK.value(), "매수 주문 처리 중");
     }
 
