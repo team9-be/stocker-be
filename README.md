@@ -200,12 +200,7 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 📚 **Tech Stack**
 
 
-<img src="https://img.shields.io/badge/JAVA 17-6DB33F?style=flat&logo=&logoColor=white"/>
-<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=springboot&logoColor=white"/>
-<img src="https://img.shields.io/badge/Spring JPA-6DB33F?style=flat&logo=&logoColor=white"/>  
-<img src="https://img.shields.io/badge/JWT-6DB33F?style=flat&logo=&logoColor=white"/>
-<img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=springsecurity&logoColor=white"/>
-<img src="https://img.shields.io/badge/Redis Cache-DC382D?style=flat&logo=redis&logoColor=white"/>
+<img src="https://img.shields.io/badge/JAVA 17-6DB33F?style=flat&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring JPA-6DB33F?style=flat&logo=&logoColor=white"/>   <img src="https://img.shields.io/badge/JWT-6DB33F?style=flat&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=springsecurity&logoColor=white"/> <img src="https://img.shields.io/badge/Redis Cache-DC382D?style=flat&logo=redis&logoColor=white"/>
 <!-- <img src="https://img.shields.io/badge/QueryDSL-7957D5?style=flat&logo=&logoColor=white"/> -->
 
 🔩 **DB**
@@ -216,21 +211,15 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 
 🗜 **Cloud**
 
-<img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/>
-<img src="https://img.shields.io/badge/AWS S3-FF9900?style=flat&logo=amazons3&logoColor=white"/>  
-<img src="https://img.shields.io/badge/AWS Elastic Load Balancer-6DB33F?style=flat&logo=&logoColor=white"/>  
+<img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat&logo=amazonec2&logoColor=white"/> <img src="https://img.shields.io/badge/AWS S3-FF9900?style=flat&logo=amazons3&logoColor=white"/>   <img src="https://img.shields.io/badge/AWS Elastic Load Balancer-6DB33F?style=flat&logo=&logoColor=white"/>  
 
 💻 **Deployment**
-<img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white"/> 
-<img src="https://img.shields.io/badge/AWS Code Delploy-6DB33F?style=flat&logo=&logoColor=white"/>  
-<img src="https://img.shields.io/badge/GitHub Actions-F05032?style=flat&logo=&logoColor=white"/> 
+<img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white"/>  <img src="https://img.shields.io/badge/AWS Code Delploy-6DB33F?style=flat&logo=&logoColor=white"/>  <img src="https://img.shields.io/badge/GitHub Actions-F05032?style=flat&logo=&logoColor=white"/> 
 
 
 ⚖ **Test**
 
-<img src="https://img.shields.io/badge/Junit5-25A162?style=flat&logo=junit5&logoColor=white"/>  <img src="https://img.shields.io/badge/Mockito-6DB33F?style=flat&logo=&logoColor=white"/>  <img src="https://img.shields.io/badge/Jmeter-D22128?style=flat&logo=apachejmeter&logoColor=white"/>  
-<img src="https://img.shields.io/badge/Ngrinder-7957D5?style=flat&logo=&logoColor=white"/>
-<img src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white"/>  
+<img src="https://img.shields.io/badge/Junit5-25A162?style=flat&logo=junit5&logoColor=white"/>  <img src="https://img.shields.io/badge/Mockito-6DB33F?style=flat&logo=&logoColor=white"/>  <img src="https://img.shields.io/badge/Jmeter-D22128?style=flat&logo=apachejmeter&logoColor=white"/>  <img src="https://img.shields.io/badge/Ngrinder-7957D5?style=flat&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white"/>  
 
 
 
