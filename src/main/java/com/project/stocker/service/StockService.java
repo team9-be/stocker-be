@@ -51,7 +51,7 @@ public class StockService {
     public StockResponseDto getStock(Long stockId) {
         Stock stock = stockRepository.findById(stockId).orElseThrow(() ->
                 new IllegalArgumentException("해당 id의 주식이 존재하지 않습니다."));
-        Trade tradeByStock = tradeRepository.findTop1ByStock_IdAndBuyerIsNotNullAndSellerIsNotNullOrderByCreatedAtDesc(stock.getId());
+        Trade tradeByStock = tradeRepository.findTop1ByStock_IdOrderByCreatedAtDesc(stock.getId());
         if (tradeByStock == null)
             throw new IllegalArgumentException("해당 id의 주식의 거래내역이 존재하지 않습니다.");
         return new StockResponseDto(stockId, stock.getCompany(), tradeByStock.getPrice(), yesterdayPrice.getYesterdayLastPrice(stockId));
