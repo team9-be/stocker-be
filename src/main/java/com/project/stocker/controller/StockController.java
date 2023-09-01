@@ -4,9 +4,11 @@ import com.project.stocker.dto.response.StockResponseDto;
 import com.project.stocker.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/stock")
 public class StockController {
@@ -26,8 +28,13 @@ public class StockController {
     }
 
     @GetMapping("")
-    public ResponseEntity<StockResponseDto> getStock(@RequestParam Long stockId) {
-        return ResponseEntity.ok(stockService.getStock(stockId));
+    public String getStock(@RequestParam Long stockId, Model model) {
+        StockResponseDto stockResponseDto = stockService.getStock(stockId);
+        model.addAttribute("stockId", stockResponseDto.getStockId());
+        model.addAttribute("company", stockResponseDto.getCompany());
+        model.addAttribute("price", stockResponseDto.getPrice());
+        model.addAttribute("change", stockResponseDto.getChange());
+        return "findStock";
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

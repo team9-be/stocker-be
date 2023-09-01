@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .stock-card {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .stock-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stock-price {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .stock-change {
+            color: green; /* 또는 red 로 변동에 따라 다른 색상 지정 가능 */
+        }
+
+    </style>
+</head>
+<body>
+<div class="stock-card">
+    <h1>주식 정보</h1>
+    <div class="stock-name" th:text="${company}">c</div>
+    <div class="stock-price" th:text="${price}">p</div>
+    <div class="stock-change" th:text="${change}">c</div>
+</div>
+</body>
+</html>
