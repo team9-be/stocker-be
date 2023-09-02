@@ -30,27 +30,25 @@ public class TradeService {
     private final OrdersRepository ordersRepository;
     private final AccountRepository accountRepository;
     private final JwtUtil jwtUtil;
-    private final AccountService accountService;
 
     @Autowired
     private TradePublisher tradePublisher;
 
     //sell order publish
     public TradeCreateResponseDto sellOrders(
-            TradeCreateRequestDto ordersCreatRequestDto,
+            TradeCreateRequestDto ordersCreateRequestDto,
             HttpServletRequest request,
             Long userId
     ) {
         String token = jwtUtil.getJwtFromRequest(request);
-        ordersCreatRequestDto.setToken(token);
-        tradePublisher.publishSellOrders(ordersCreatRequestDto);
-//        ordersCreatRequestDto.getStock(); -> ????
+        ordersCreateRequestDto.setToken(token);
+        tradePublisher.publishSellOrders(ordersCreateRequestDto);
         Account account = accountRepository.findByUserIdAndStockCompany(
                 userId,
-                ordersCreatRequestDto.getStock()).orElseThrow(
+                ordersCreateRequestDto.getStock()).orElseThrow(
                         () -> new IllegalArgumentException("해당 계좌를 찾을 수 없습니다.")
         );
-        if(ordersCreatRequestDto.getQuantity() > account.getQuantity()){
+        if(ordersCreateRequestDto.getQuantity() > account.getQuantity()){
             throw new IllegalArgumentException("보유중인 주식이 부족합니다.");
         }
         return new TradeCreateResponseDto(HttpStatus.OK.value(), "매도 주문 처리 중");
@@ -75,7 +73,6 @@ public class TradeService {
         Orders trade = new Orders.Builder(quantity, buyPrice, stock)
                 .seller(user1)
                 .build();
-
         ordersRepository.save(trade);
         matchOrders();
         return new TradeCreateResponseDto(HttpStatus.OK.value(), "매도 신청 성공.");
@@ -137,10 +134,10 @@ public class TradeService {
     }
 
     //buy orders publish
-    public TradeCreateResponseDto buyOrders(TradeCreateRequestDto ordersCreatRequestDto, HttpServletRequest request) {
+    public TradeCreateResponseDto buyOrders(TradeCreateRequestDto ordersCreateRequestDto, HttpServletRequest request) {
         String token = jwtUtil.getJwtFromRequest(request);
-        ordersCreatRequestDto.setToken(token);
-        tradePublisher.publishBuyOrders(ordersCreatRequestDto);
+        ordersCreateRequestDto.setToken(token);
+        tradePublisher.publishBuyOrders(ordersCreateRequestDto);
         return new TradeCreateResponseDto(HttpStatus.OK.value(), "매수 주문 처리 중");
     }
 

@@ -1,5 +1,7 @@
 package com.project.stocker.entity;
 
+import com.project.stocker.dto.request.AccountAddStockRequest;
+import com.project.stocker.dto.request.TradeCreateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,12 +30,22 @@ public class Account {
 
     }
 
-    public void renewal(Trade trade) {
-        this.stockCompany = trade.getStock().getCompany();
-        this.quantity = trade.getQuantity();
-        this.price = trade.getPrice();
+    public Account(User user, TradeCreateRequestDto ordersCreateRequestDto) {
+        this.user = user;
+        this.stockCompany = ordersCreateRequestDto.getStock();
+        this.price = 0L;
+        this.quantity = 0L;
+        this.totalAsset = 0L;
+    }
+
+    public Account(User user, AccountAddStockRequest requestDto) {
+        this.user = user;
+        this.quantity = requestDto.getQuantity();
+        this.stockCompany = requestDto.getStockCompany();
+        this.price = requestDto.getPrice();
         this.totalAsset = this.price * this.quantity;
     }
+
     public void changeQuantity(Long quantity) {
         this.quantity += quantity;
         this.totalAsset = this.price * this.quantity;
