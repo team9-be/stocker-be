@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -35,14 +36,20 @@ public class TradeService {
     private TradePublisher tradePublisher;
 
     //sell order publish
-    public TradeCreateResponseDto sellOrders(TradeCreateRequestDto ordersCreatRequestDto, HttpServletRequest request,
-                                             Long userId) {
+    public TradeCreateResponseDto sellOrders(
+            TradeCreateRequestDto ordersCreatRequestDto,
+            HttpServletRequest request,
+            Long userId
+    ) {
         String token = jwtUtil.getJwtFromRequest(request);
         ordersCreatRequestDto.setToken(token);
         tradePublisher.publishSellOrders(ordersCreatRequestDto);
-        ordersCreatRequestDto.getStock();
-        Account account = accountRepository.findByUserIdAndStockCompany(userId, ordersCreatRequestDto.getStock()).orElseThrow(() ->
-                new IllegalArgumentException("해당 계좌를 찾을 수 없습니다."));
+//        ordersCreatRequestDto.getStock(); -> ????
+        Account account = accountRepository.findByUserIdAndStockCompany(
+                userId,
+                ordersCreatRequestDto.getStock()).orElseThrow(
+                        () -> new IllegalArgumentException("해당 계좌를 찾을 수 없습니다.")
+        );
         if(ordersCreatRequestDto.getQuantity() > account.getQuantity()){
             throw new IllegalArgumentException("보유중인 주식이 부족합니다.");
         }
@@ -216,56 +223,62 @@ public class TradeService {
         return new TradeDeleteResponseDto(HttpStatus.OK.value(), "매수 취소 성공.");
     }
 
-    //Matching function
-    //Matching 시점에 my account insert
     @Transactional
     public void matchOrders() {
         List<Orders> allOrders = ordersRepository.findAll();
+        allOrders.stream()
+                .filter(order -> order.getBuyer() != null)
+                .forEach(buyOrder -> {
+                    allOrders.stream()
+                            .filter(order -> order.getSeller() != null)
+                            .filter(sellOrder -> isMatchingOrder(buyOrder, sellOrder))
+                            .findFirst()
+                            .ifPresent(sellOrder -> processMatchingOrders(buyOrder, sellOrder));
+                });
+    }
 
-        for (Orders buyOrder : allOrders) {
-            if (buyOrder.getBuyer() == null) continue;
+    private boolean isMatchingOrder(Orders buyOrder, Orders sellOrder) {
+        return buyOrder.getStock().equals(sellOrder.getStock()) &&
+                buyOrder.getPrice().equals(sellOrder.getPrice()) &&
+                buyOrder.getQuantity().equals(sellOrder.getQuantity());
+    }
 
-            for (Orders sellOrder : allOrders) {
-                if (sellOrder.getSeller() == null) continue;
+    private void processMatchingOrders(Orders buyOrder, Orders sellOrder) {
+        Trade trade = createTrade(buyOrder, sellOrder);
+        updateTradeStatus(trade);
+        updateAccount(buyOrder.getBuyer(), trade.getStock().getCompany(), trade.getQuantity(), trade);
+        updateAccount(sellOrder.getSeller(), trade.getStock().getCompany(), -trade.getQuantity(), trade);
+        deleteOrders(buyOrder, sellOrder);
+    }
 
-                if (buyOrder.getStock().equals(sellOrder.getStock()) &&
-                        buyOrder.getPrice().equals(sellOrder.getPrice()) &&
-                        buyOrder.getQuantity().equals(sellOrder.getQuantity())) {
+    private Trade createTrade(Orders buyOrder, Orders sellOrder) {
+        return new Trade.Builder(buyOrder.getQuantity(), buyOrder.getPrice(), buyOrder.getStock())
+                .buyer(buyOrder.getBuyer())
+                .seller(sellOrder.getSeller())
+                .build();
+    }
 
-                    Trade trade = new Trade.Builder(buyOrder.getQuantity(), buyOrder.getPrice(), buyOrder.getStock())
-                            .buyer(buyOrder.getBuyer())
-                            .seller(sellOrder.getSeller())
-                            .build();
-                    trade.setStatus("confirm");
-                    tradeRepository.save(trade);
-                    // myAccount
-                    if (accountRepository.findByUserIdAndStockCompany(buyOrder.getBuyer().getId(), trade.getStock()
-                            .getCompany()).isPresent()) {
-                        Account account = accountRepository.findByUserIdAndStockCompany(buyOrder.getBuyer().getId(),
-                                trade.getStock().getCompany()).get();
-                        account.changeQuantity(trade.getQuantity());
-                    } else {
-                        Account account = new Account(
-                                userRepository.findById(buyOrder.getBuyer().getId()).get(), trade);
-                        accountRepository.save(account);
-                    }
-                    if (accountRepository.findByUserIdAndStockCompany(sellOrder.getSeller().getId(), trade.getStock()
-                            .getCompany()).isPresent()) {
-                        Account account2 = accountRepository.findByUserIdAndStockCompany(sellOrder.getSeller().getId(),
-                                trade.getStock().getCompany()).get();
-                        account2.changeQuantity(-trade.getQuantity());
-                    }else {
-                        Account account = new Account(
-                                userRepository.findById(sellOrder.getSeller().getId()).get(), trade);
-                        accountRepository.save(account);
-                    }
-                    ordersRepository.delete(buyOrder);
-                    ordersRepository.delete(sellOrder);
-                    return;
-                }
-            }
+    private void updateTradeStatus(Trade trade) {
+        trade.setStatus("confirm");
+        tradeRepository.save(trade);
+    }
+
+    private void updateAccount(User user, String stockCompany, Long quantity, Trade trade) {
+        Optional<Account> accountOptional = accountRepository.findByUserIdAndStockCompany(user.getId(), stockCompany);
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            account.changeQuantity(quantity);
+        } else {
+            Account account = new Account(user, trade);
+            accountRepository.save(account);
         }
     }
+
+    private void deleteOrders(Orders buyOrder, Orders sellOrder) {
+        ordersRepository.delete(buyOrder);
+        ordersRepository.delete(sellOrder);
+    }
+
 }
 
 
