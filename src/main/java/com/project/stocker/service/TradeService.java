@@ -41,8 +41,11 @@ public class TradeService {
         ordersCreatRequestDto.setToken(token);
         tradePublisher.publishSellOrders(ordersCreatRequestDto);
         ordersCreatRequestDto.getStock();
-        Account account = accountRepository.findByUserIdAndStockCompany(userId, ordersCreatRequestDto.getStock()).orElseThrow(() ->
-                new IllegalArgumentException("해당 계좌를 찾을 수 없습니다."));
+        if(accountRepository.findByUserIdAndStockCompany(userId, ordersCreatRequestDto.getStock()).isEmpty()){
+            Account account = new Account(userRepository.findById(userId).get(), ordersCreatRequestDto);
+            accountRepository.save(account);
+        }
+        Account account = accountRepository.findByUserIdAndStockCompany(userId, ordersCreatRequestDto.getStock()).get();
         if(ordersCreatRequestDto.getQuantity() > account.getQuantity()){
             throw new IllegalArgumentException("보유중인 주식이 부족합니다.");
         }
@@ -68,7 +71,6 @@ public class TradeService {
         Orders trade = new Orders.Builder(quantity, buyPrice, stock)
                 .seller(user1)
                 .build();
-
         ordersRepository.save(trade);
         matchOrders();
         return new TradeCreateResponseDto(HttpStatus.OK.value(), "매도 신청 성공.");
@@ -249,14 +251,14 @@ public class TradeService {
                                 userRepository.findById(buyOrder.getBuyer().getId()).get(), trade);
                         accountRepository.save(account);
                     }
-                    if (accountRepository.findByUserIdAndStockCompany(sellOrder.getSeller().getId(), trade.getStock()
+                    if (accountRepository.findByUserIdAndStockCompany(trade.getSeller().getId(), trade.getStock()
                             .getCompany()).isPresent()) {
-                        Account account2 = accountRepository.findByUserIdAndStockCompany(sellOrder.getSeller().getId(),
+                        Account account2 = accountRepository.findByUserIdAndStockCompany(trade.getSeller().getId(),
                                 trade.getStock().getCompany()).get();
                         account2.changeQuantity(-trade.getQuantity());
                     }else {
                         Account account = new Account(
-                                userRepository.findById(sellOrder.getSeller().getId()).get(), trade);
+                                userRepository.findById(trade.getSeller().getId()).get(), trade);
                         accountRepository.save(account);
                     }
                     ordersRepository.delete(buyOrder);
