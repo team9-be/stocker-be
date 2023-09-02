@@ -10,8 +10,8 @@ import java.util.concurrent.Executor;
 @EnableAsync
 @Configuration
 public class AsyncConfig {
-    private static int CORE_POOL_SIZE = 3;
-    private static int MAX_POOL_SIZE = 3;
+    private static int CORE_POOL_SIZE = 10;
+    private static int MAX_POOL_SIZE = 10;
     private static int QUEUE_CAPACITY = 10;
     private static String THREAD_NAME_PREFIX = "async-task";
 
