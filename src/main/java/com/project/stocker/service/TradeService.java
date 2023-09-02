@@ -13,10 +13,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 
 @Service
@@ -220,8 +222,10 @@ public class TradeService {
 
     //Matching function
     //Matching 시점에 my account insert
+    @Async
     @Transactional
     public void matchOrders() {
+        System.out.println("Current Thread : " + Thread.currentThread().getName());
         List<Orders> allOrders = ordersRepository.findAll();
 
         for (Orders buyOrder : allOrders) {
@@ -240,6 +244,7 @@ public class TradeService {
                             .build();
                     trade.setStatus("confirm");
                     tradeRepository.save(trade);
+
                     // myAccount
                     if (accountRepository.findByUserIdAndStockCompany(buyOrder.getBuyer().getId(), trade.getStock()
                             .getCompany()).isPresent()) {
