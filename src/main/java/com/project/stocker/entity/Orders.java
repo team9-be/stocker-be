@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
+
+
 
 @Entity
 @Getter
@@ -24,15 +27,19 @@ public class Orders extends Auditing {
     @Column
     private String status;
 
+    @Version
+    private int version;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stock_id")
     private Stock stock;
 
+    @BatchSize(size = 10)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buyer_id", nullable = true)
     private User buyer;
 
+    @BatchSize(size = 10)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id", nullable = true)
     private User seller;
