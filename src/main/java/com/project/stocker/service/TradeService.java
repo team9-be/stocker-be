@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,8 @@ public class TradeService {
     private final OrdersRepository ordersRepository;
     private final AccountRepository accountRepository;
     private final JwtUtil jwtUtil;
+
+
 
     @Autowired
     private TradePublisher tradePublisher;
@@ -220,8 +223,12 @@ public class TradeService {
         return new TradeDeleteResponseDto(HttpStatus.OK.value(), "매수 취소 성공.");
     }
 
+    //Matching function
+    //Matching 시점에 my account insert
+    @Async
     @Transactional
     public void matchOrders() {
+        System.out.println("Current Thread : " + Thread.currentThread().getName());
         List<Orders> allOrders = ordersRepository.findAll();
         allOrders.stream()
                 .filter(order -> order.getBuyer() != null)
@@ -254,6 +261,7 @@ public class TradeService {
                 .seller(sellOrder.getSeller())
                 .build();
     }
+
 
     private void updateTradeStatus(Trade trade) {
         trade.setStatus("confirm");
