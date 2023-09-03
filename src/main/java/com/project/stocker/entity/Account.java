@@ -30,9 +30,9 @@ public class Account {
 
     }
 
-    public Account(User user, TradeCreateRequestDto ordersCreatRequestDto) {
+    public Account(User user, TradeCreateRequestDto ordersCreateRequestDto) {
         this.user = user;
-        this.stockCompany = ordersCreatRequestDto.getStock();
+        this.stockCompany = ordersCreateRequestDto.getStock();
         this.price = 0L;
         this.quantity = 0L;
         this.totalAsset = 0L;
