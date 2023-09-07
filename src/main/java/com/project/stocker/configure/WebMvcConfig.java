@@ -18,7 +18,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**").allowCredentials(true)
                 .allowedHeaders("*")
-                .allowedOrigins("https://stocker-fe.vercel.app/, https://stocker-fe.vercel.app")
+
+                .allowedOrigins("https://stocker-fe.vercel.app, https://stocker-fe.vercel.app/#about")
+
                 .exposedHeaders("Authorization", "RefreshToken")
                 .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE")
                 .maxAge(3000);
