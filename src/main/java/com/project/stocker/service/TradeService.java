@@ -240,6 +240,7 @@ public class TradeService {
                 processMatchingOrders(buyOrder, sellOrder);
             });
         });
+
     }
 
     private boolean isMatchingOrder(Orders buyOrder, Orders sellOrder) {
