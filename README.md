@@ -67,6 +67,8 @@ STOCK&apos;ER 은 고성능, 철저한 보안, 데이터의 효율성, 그리고
 
 <!-- // TODO: 시연 이미지 / GIF 필요!  -->
 
+
+
 자주 조회되는 DB 정보를 Redis에서 캐싱을 사용하여 기존 DB 에서 직접 조회하는 것 보다 빠르고 효율적으로 기능 제공.
 
 - 
@@ -265,7 +267,7 @@ Spring Security를 활용해서 서비스 이용자의 정보를 안전하게 �
 
 <!-- // TODO: CREATE GIF FILE OR IMAGE  -->
 
-
+![ERD Image](./resources/images/RedisCachingSpeedup.png)
 
 
 ---
