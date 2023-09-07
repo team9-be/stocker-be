@@ -286,6 +286,49 @@ public class TradeService {
         ordersRepository.delete(sellOrder);
     }
 
+    public TradeCreateResponseDto testBuy() {
+        String token = jwtUtil.createToken("ht@gmail.com", UserRoleEnum.USER);
+        TradeCreateRequestDto tradeCreateRequestDto = new TradeCreateRequestDto();
+        tradeCreateRequestDto.setPrice(70000L);
+        tradeCreateRequestDto.setToken(token.substring(7));
+        tradeCreateRequestDto.setQuantity(10L);
+        tradeCreateRequestDto.setStock("삼성전자");
+        tradePublisher.publishBuyOrders(tradeCreateRequestDto);
+        return new TradeCreateResponseDto(200, "매수 주문 처리 중");
+
+    }
+    public TradeCreateResponseDto testBuy2() {
+        String token = jwtUtil.createToken("ht@gmail.com", UserRoleEnum.USER);
+        TradeCreateRequestDto tradeCreateRequestDto = new TradeCreateRequestDto();
+        tradeCreateRequestDto.setPrice(100000L);
+        tradeCreateRequestDto.setToken(token.substring(7));
+        tradeCreateRequestDto.setQuantity(10L);
+        tradeCreateRequestDto.setStock("SK하이닉스");
+        tradePublisher.publishBuyOrders(tradeCreateRequestDto);
+        return new TradeCreateResponseDto(200, "매수 주문 처리 중");
+
+    }
+    public TradeCreateResponseDto testSell(){
+        String token = jwtUtil.createToken("ht2@gmail.com", UserRoleEnum.USER);
+        System.out.println("token = " + token);
+        TradeCreateRequestDto tradeCreateRequestDto = new TradeCreateRequestDto();
+        tradeCreateRequestDto.setPrice(70000L);
+        tradeCreateRequestDto.setToken(token.substring(7));
+        tradeCreateRequestDto.setQuantity(10L);
+        tradeCreateRequestDto.setStock("삼성전자");
+        tradePublisher.publishSellOrders(tradeCreateRequestDto);
+        return new TradeCreateResponseDto(HttpStatus.OK.value(), "매도 주문 처리 중");
+    }
+    public TradeCreateResponseDto testSell2(){
+        String token = jwtUtil.createToken("ht2@gmail.com", UserRoleEnum.USER);
+        TradeCreateRequestDto tradeCreateRequestDto = new TradeCreateRequestDto();
+        tradeCreateRequestDto.setPrice(100000L);
+        tradeCreateRequestDto.setToken(token.substring(7));
+        tradeCreateRequestDto.setQuantity(10L);
+        tradeCreateRequestDto.setStock("SK하이닉스");
+        tradePublisher.publishSellOrders(tradeCreateRequestDto);
+        return new TradeCreateResponseDto(HttpStatus.OK.value(), "매도 주문 처리 중");
+    }
 }
 
 
