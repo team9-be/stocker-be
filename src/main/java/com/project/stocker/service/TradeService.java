@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -228,17 +229,17 @@ public class TradeService {
     @Async
     @Transactional
     public void matchOrders() {
-        System.out.println("Current Thread : " + Thread.currentThread().getName());
-        List<Orders> allOrders = ordersRepository.findAll();
-        allOrders.stream()
-                .filter(order -> order.getBuyer() != null)
-                .forEach(buyOrder -> {
-                    allOrders.stream()
-                            .filter(order -> order.getSeller() != null)
-                            .filter(sellOrder -> isMatchingOrder(buyOrder, sellOrder))
-                            .findFirst()
-                            .ifPresent(sellOrder -> processMatchingOrders(buyOrder, sellOrder));
-                });
+        List<Orders> buyOrders = ordersRepository.findAllByBuyerIsNotNullAndSellerIsNull();
+        List<Orders> sellOrders = ordersRepository.findAllBySellerIsNotNullAndBuyerIsNull();
+
+        buyOrders.forEach(buyOrder -> {
+            List<Orders> matchingSellOrders = sellOrders.stream()
+                    .filter(sellOrder -> isMatchingOrder(buyOrder, sellOrder))
+                    .collect(Collectors.toList());
+            matchingSellOrders.forEach(sellOrder -> {
+                processMatchingOrders(buyOrder, sellOrder);
+            });
+        });
     }
 
     private boolean isMatchingOrder(Orders buyOrder, Orders sellOrder) {
