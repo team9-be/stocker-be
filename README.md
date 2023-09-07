@@ -265,9 +265,53 @@ Spring Security를 활용해서 서비스 이용자의 정보를 안전하게 �
 
 ### 🌟 조회 서비스 로직에서 Redis cache 응답속도와 TPS 개선  🌟
 
-<!-- // TODO: CREATE GIF FILE OR IMAGE  -->
+상위 랭킹 조회 등 DataBase를 조회하는 API의 응답속도가 느린 현상발견 
+
+인덱싱을 활용하여 시간단축을 많이 시켰지만 아직 2초대로 느리다고 판단
+
+어제자 거래기록의 데이터이므로 변동성이 없고 메인페이지에서 보여줄 데이터이기 때문에 캐싱을 이용하여 응답속도를 개선
 
 ![ERD Image](./resources/images/RedisCachingSpeedup.png)
+
+### 🌟 서버 Scale-Up & Scale-Out을 통한 TPS 개선  🌟
+
+클라우드 서버의 스펙(T2.micro)상 낮은 TPS발생
+
+![ERD Image](./resources/images/server_scaleup_scaleout_before.png)
+
+다양한 스펙들로 테스팅을 진행하여 프로젝트 어플리케이션에 맞는 기본 인스턴스 스펙(c5.large)으로 Scale-Up진행
+
+Load-Balancer(AWS ELB)를 사용하여 Scale-Out진행
+
+![ERD Image](./resources/images/server_scaleup_scaleout_after.png)
+
+### 🌟 멀티 인스턴스 로드밸런싱 로직 개선  🌟
+
+대상 그룹에 인스턴스를 추가하였음에도 불구하고 AWS로드 밸런서가 헬스체크를 실패하였다는 문구와 함께 접속이 불가능한 현상 발생
+
+![ERD Image](./resources/images/multi-instance-loadbalancing-before.png)
+
+헬스체크 대상주소를 점검하고 로드밸런서 리스너 설정 확인후 최상위 도메인을 발급받아 ACM인증서로 https를 적용하여 해결 
+
+![ERD Image](./resources/images/multi-instance-loadbalancing-after.png)
+
+### 🌟 레디스 직렬화 문제  🌟
+
+Java에서 제공되는 기본적인 직렬화 인터페이스로 구현시도
+
+![ERD Image](./resources/images/redis-deserialization-code.png)
+
+구현 후 Redis에 저장된 데이터가 Java의 기본 직렬화 형식으로 저장되었는데 그것을 JSON형식으로 역직렬화 하려고 시도해서 발생하는 것으로 추정
+
+![ERD Image](./resources/images/redis-deserialization-error.png)
+
+Jackson기반의 Jackson2JsonRedisSerializer를 사용하여 해결
+
+Jackson2JsonRedisSerializer : 제네릭 타입을 사용하므로 어떤 객체를 직렬화할지 역직렬화 할지 알 수 있습니다.
+
+이 설정은 JSON 직렬화/역직렬화에 사용되고 ObjectMapper를 통해 추가적인 설정이 가능하게 됩니다.
+
+![ERD Image](./resources/images/redis-deserialization-after.png)
 
 
 ---
