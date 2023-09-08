@@ -6,15 +6,13 @@ import com.project.stocker.dto.response.RankingVolumeDto;
 import com.project.stocker.service.RankingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("https://stocker-fe.vercel.app/")
 @RequestMapping("/api")
 public class RankingController {
 
