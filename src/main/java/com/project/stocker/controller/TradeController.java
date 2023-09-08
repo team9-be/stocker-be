@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin("https://stocker-fe.vercel.app/", "https://stocker-fe.vercel.app/#about")
+@CrossOrigin("https://stocker-fe.vercel.app/")
 @RequestMapping("/api/trade")
 public class TradeController {
 
