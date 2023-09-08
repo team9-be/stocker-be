@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("https://stocker-fe.vercel.app/", "https://stocker-fe.vercel.app/#about")
 @RequestMapping("/api/trade")
 public class TradeController {
 
@@ -58,5 +59,21 @@ public class TradeController {
     @DeleteMapping("/sell")
     public TradeDeleteResponseDto sellDelete(@RequestBody TradeDeleteRequestDto sellDeleteDto, HttpServletRequest request) {
         return TradeService.sellDelete(sellDeleteDto, request);
+    }
+    @PostMapping("/test/buy")
+    public TradeCreateResponseDto testBuy(){
+        return TradeService.testBuy();
+    }
+    @PostMapping("/test/buy2")
+    public TradeCreateResponseDto testBuy2(){
+        return TradeService.testBuy2();
+    }
+    @PostMapping("/test/sell")
+    public TradeCreateResponseDto testSell(){
+        return TradeService.testSell();
+    }
+    @PostMapping("/test/sell2")
+    public TradeCreateResponseDto testSell2(){
+        return TradeService.testSell2();
     }
 }

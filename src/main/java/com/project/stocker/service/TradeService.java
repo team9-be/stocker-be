@@ -13,11 +13,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -30,6 +32,8 @@ public class TradeService {
     private final OrdersRepository ordersRepository;
     private final AccountRepository accountRepository;
     private final JwtUtil jwtUtil;
+
+
 
     @Autowired
     private TradePublisher tradePublisher;
@@ -220,18 +224,23 @@ public class TradeService {
         return new TradeDeleteResponseDto(HttpStatus.OK.value(), "매수 취소 성공.");
     }
 
+    //Matching function
+    //Matching 시점에 my account insert
+    @Async
     @Transactional
     public void matchOrders() {
-        List<Orders> allOrders = ordersRepository.findAll();
-        allOrders.stream()
-                .filter(order -> order.getBuyer() != null)
-                .forEach(buyOrder -> {
-                    allOrders.stream()
-                            .filter(order -> order.getSeller() != null)
-                            .filter(sellOrder -> isMatchingOrder(buyOrder, sellOrder))
-                            .findFirst()
-                            .ifPresent(sellOrder -> processMatchingOrders(buyOrder, sellOrder));
-                });
+        List<Orders> buyOrders = ordersRepository.findAllByBuyerIsNotNullAndSellerIsNull();
+        List<Orders> sellOrders = ordersRepository.findAllBySellerIsNotNullAndBuyerIsNull();
+
+        buyOrders.forEach(buyOrder -> {
+            List<Orders> matchingSellOrders = sellOrders.stream()
+                    .filter(sellOrder -> isMatchingOrder(buyOrder, sellOrder))
+                    .collect(Collectors.toList());
+            matchingSellOrders.forEach(sellOrder -> {
+                processMatchingOrders(buyOrder, sellOrder);
+            });
+        });
+
     }
 
     private boolean isMatchingOrder(Orders buyOrder, Orders sellOrder) {
@@ -255,6 +264,7 @@ public class TradeService {
                 .build();
     }
 
+
     private void updateTradeStatus(Trade trade) {
         trade.setStatus("confirm");
         tradeRepository.save(trade);
@@ -276,6 +286,49 @@ public class TradeService {
         ordersRepository.delete(sellOrder);
     }
 
+    public TradeCreateResponseDto testBuy() {
+        String token = jwtUtil.createToken("ht@gmail.com", UserRoleEnum.USER);
+        TradeCreateRequestDto tradeCreateRequestDto = new TradeCreateRequestDto();
+        tradeCreateRequestDto.setPrice(70000L);
+        tradeCreateRequestDto.setToken(token.substring(7));
+        tradeCreateRequestDto.setQuantity(10L);
+        tradeCreateRequestDto.setStock("삼성전자");
+        tradePublisher.publishBuyOrders(tradeCreateRequestDto);
+        return new TradeCreateResponseDto(200, "매수 주문 처리 중");
+
+    }
+    public TradeCreateResponseDto testBuy2() {
+        String token = jwtUtil.createToken("ht@gmail.com", UserRoleEnum.USER);
+        TradeCreateRequestDto tradeCreateRequestDto = new TradeCreateRequestDto();
+        tradeCreateRequestDto.setPrice(100000L);
+        tradeCreateRequestDto.setToken(token.substring(7));
+        tradeCreateRequestDto.setQuantity(10L);
+        tradeCreateRequestDto.setStock("SK하이닉스");
+        tradePublisher.publishBuyOrders(tradeCreateRequestDto);
+        return new TradeCreateResponseDto(200, "매수 주문 처리 중");
+
+    }
+    public TradeCreateResponseDto testSell(){
+        String token = jwtUtil.createToken("ht2@gmail.com", UserRoleEnum.USER);
+        System.out.println("token = " + token);
+        TradeCreateRequestDto tradeCreateRequestDto = new TradeCreateRequestDto();
+        tradeCreateRequestDto.setPrice(70000L);
+        tradeCreateRequestDto.setToken(token.substring(7));
+        tradeCreateRequestDto.setQuantity(10L);
+        tradeCreateRequestDto.setStock("삼성전자");
+        tradePublisher.publishSellOrders(tradeCreateRequestDto);
+        return new TradeCreateResponseDto(HttpStatus.OK.value(), "매도 주문 처리 중");
+    }
+    public TradeCreateResponseDto testSell2(){
+        String token = jwtUtil.createToken("ht2@gmail.com", UserRoleEnum.USER);
+        TradeCreateRequestDto tradeCreateRequestDto = new TradeCreateRequestDto();
+        tradeCreateRequestDto.setPrice(100000L);
+        tradeCreateRequestDto.setToken(token.substring(7));
+        tradeCreateRequestDto.setQuantity(10L);
+        tradeCreateRequestDto.setStock("SK하이닉스");
+        tradePublisher.publishSellOrders(tradeCreateRequestDto);
+        return new TradeCreateResponseDto(HttpStatus.OK.value(), "매도 주문 처리 중");
+    }
 }
 
 
